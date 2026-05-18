@@ -60,7 +60,7 @@
   .section-body { font-size: 1.05rem; line-height: 1.75; color: var(--v12-mid); max-width: 640px; }
 
   /* HERO */
-  .hero { min-height: calc(100vh - var(--nav-h)); display: grid; grid-template-columns: 1fr 1fr; align-items: center; max-width: var(--max-w); margin: 0 auto; padding: 5rem clamp(1.5rem, 5vw, 3rem) 4rem; gap: 4rem; }
+  .hero { min-height: calc(100vh - var(--nav-h)); display: grid; grid-template-columns: 1fr 1fr; align-items: start; max-width: var(--max-w); margin: 0 auto; padding: 5rem clamp(1.5rem, 5vw, 3rem) 4rem; gap: 4rem; }
   .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--v12-orange); background: rgba(232,93,47,0.1); padding: 6px 14px; border-radius: 100px; margin-bottom: 1.5rem; }
   .hero-eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--v12-orange); flex-shrink: 0; }
   .hero h1 { font-family: var(--serif); font-size: clamp(2.8rem, 5vw, 4.2rem); line-height: 1.07; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
@@ -74,20 +74,23 @@
 
   /* SLIDESHOW */
   .slideshow {
-    position: relative; width: 100%; max-width: 520px;
+    position: relative; width: 100%; max-width: 480px;
     border-radius: 24px; overflow: hidden;
-    background: var(--v12-dark);
-    aspect-ratio: 4/3;
+    background: white;
+    height: 520px;
   }
   .slide {
     position: absolute; inset: 0;
     opacity: 0; transition: opacity 0.7s ease;
     display: flex; align-items: center; justify-content: center;
+    padding: 1.5rem;
   }
   .slide.active { opacity: 1; }
   .slide img {
-    width: 100%; height: 100%;
-    object-fit: cover; display: block;
+    max-width: 100%; max-height: 100%;
+    width: auto; height: auto;
+    object-fit: contain; display: block;
+    margin: auto;
   }
   .slide-controls {
     position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
@@ -95,18 +98,18 @@
   }
   .slide-dot {
     width: 8px; height: 8px; border-radius: 50%;
-    background: rgba(255,255,255,0.35); border: none; cursor: pointer;
+    background: rgba(0,0,0,0.18); border: none; cursor: pointer;
     transition: background 0.2s, transform 0.2s; padding: 0;
   }
   .slide-dot.active { background: var(--v12-orange); transform: scale(1.25); }
   .slide-arrow {
     position: absolute; top: 50%; transform: translateY(-50%);
-    background: rgba(0,0,0,0.45); border: none; color: white;
+    background: rgba(0,0,0,0.1); border: none; color: var(--v12-black);
     width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
     display: flex; align-items: center; justify-content: center;
-    font-size: 1rem; z-index: 10; transition: background 0.2s;
+    font-size: 1rem; z-index: 10; transition: background 0.2s, color 0.2s;
   }
-  .slide-arrow:hover { background: var(--v12-orange); }
+  .slide-arrow:hover { background: var(--v12-orange); color: white; }
   .slide-arrow.prev { left: 0.75rem; }
   .slide-arrow.next { right: 0.75rem; }
 
@@ -180,12 +183,17 @@
   /* APP VISUAL */
   .app-visual-wrap {
     margin-top: 4rem; border-radius: 20px; overflow: hidden;
-    background: var(--v12-dark);
+    background: white;
     display: flex; align-items: center; justify-content: center;
-    min-height: 360px;
+    padding: 3rem 2rem;
+    border: 1px solid rgba(0,0,0,0.07);
   }
   .app-visual-wrap img {
-    width: 100%; max-height: 520px; object-fit: contain; display: block;
+    max-height: 600px; max-width: 320px;
+    width: auto; height: auto;
+    object-fit: contain; display: block;
+    border-radius: 16px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
   }
 
   /* COMPLIANCE */
@@ -252,8 +260,8 @@
   .delay-3 { animation-delay: 0.34s; }
 
   @media (max-width: 768px) {
-    .hero { grid-template-columns: 1fr; gap: 3rem; padding-top: 3rem; }
-    .slideshow { max-width: 100%; }
+    .hero { grid-template-columns: 1fr; gap: 3rem; padding-top: 3rem; align-items: start; }
+    .slideshow { max-width: 100%; height: 380px; }
     .tech-split, .contact-grid, .dashboard-split { grid-template-columns: 1fr; gap: 2.5rem; }
     .layer-row { grid-template-columns: 2rem 1fr; }
     .layer-desc { display: none; }
@@ -303,26 +311,21 @@
       <!-- SLIDESHOW replacing the old SVG card -->
       <div class="fade-in delay-2" style="display:flex;justify-content:center;">
         <div class="slideshow" id="heroSlideshow">
-          <!--
-            TO ADD YOUR IMAGES:
-            Replace each src="images/visual-X.jpg" with your actual GitHub raw image URLs.
-            Example: src="https://raw.githubusercontent.com/muraliraddd/v12-smartstep/main/images/visual1.jpg"
-            The filenames below are placeholders — update them to match what's in your repo.
-          -->
+
           <div class="slide active">
-            <img src="images/visual1.jpg" alt="SmartStep product visual 1" onerror="this.parentElement.style.background='#2a2720';this.style.display='none'">
+            <img src="Visual1.png" alt="SmartStep product visual 1" onerror="this.parentElement.style.background='#2a2720';this.style.display='none'">
           </div>
           <div class="slide">
-            <img src="images/visual2.jpg" alt="SmartStep product visual 2" onerror="this.parentElement.style.background='#2a2720';this.style.display='none'">
+            <img src="Visual2.png" alt="SmartStep product visual 2" onerror="this.parentElement.style.background='#2a2720';this.style.display='none'">
           </div>
           <div class="slide">
-            <img src="images/visual3.jpg" alt="SmartStep product visual 3" onerror="this.parentElement.style.background='#2a2720';this.style.display='none'">
+            <img src="Visual3.png" alt="SmartStep product visual 3" onerror="this.parentElement.style.background='#2a2720';this.style.display='none'">
           </div>
           <div class="slide">
-            <img src="images/visual4.jpg" alt="SmartStep product visual 4" onerror="this.parentElement.style.background='#2a2720';this.style.display='none'">
+            <img src="Visual4.png" alt="SmartStep product visual 4" onerror="this.parentElement.style.background='#2a2720';this.style.display='none'">
           </div>
           <div class="slide">
-            <img src="images/visual5.jpg" alt="SmartStep product visual 5" onerror="this.parentElement.style.background='#2a2720';this.style.display='none'">
+            <img src="Visual5.png" alt="SmartStep product visual 5" onerror="this.parentElement.style.background='#2a2720';this.style.display='none'">
           </div>
           <button class="slide-arrow prev" onclick="moveSlide(-1)" aria-label="Previous">&#8592;</button>
           <button class="slide-arrow next" onclick="moveSlide(1)" aria-label="Next">&#8594;</button>
@@ -380,6 +383,8 @@
         <span class="badge">UK GDPR</span>
         <span class="badge">WCAG AA</span>
         <span class="badge">HSE Workplace Safety</span>
+        <span class="badge">BLE GATT Spec</span>
+        <span class="badge">GaitAnalysis+ ICC 0.91</span>
       </div>
     </div>
   </div>
@@ -521,12 +526,9 @@
       </div>
 
       <!-- APP VISUAL -->
-      <!--
-        Replace src="images/app-visual.jpg" with the actual filename from your GitHub repo.
-        Example: src="https://raw.githubusercontent.com/muraliraddd/v12-smartstep/main/images/app-visual.png"
-      -->
+
       <div class="app-visual-wrap">
-        <img src="images/app-visual.jpg" alt="SmartStep app screens" onerror="this.parentElement.innerHTML='<p style=\'color:rgba(255,255,255,0.3);padding:2rem;text-align:center;\'>App visual — update src to your image path</p>'">
+        <img src="Visual5.png" alt="SmartStep app screens" onerror="this.parentElement.innerHTML='<p style=\'color:rgba(255,255,255,0.3);padding:2rem;text-align:center;\'>App visual — update src to your image path</p>'">
       </div>
     </div>
   </section>
@@ -576,97 +578,523 @@
 <!-- SAFETY SCIENCE -->
 <div class="page" id="page-safety">
 
+  <!-- HERO -->
   <section style="padding-top:5rem; background:var(--v12-dark);">
     <div class="section-inner">
-      <span class="section-tag" style="color:var(--v12-orange);">Detection science</span>
-      <h1 class="section-title" style="color:white;">Six biomechanical metrics. Every step. Every shift.</h1>
-      <p class="section-body" style="color:rgba(255,255,255,0.5); max-width:680px;">SmartStep's detection suite draws on the CDC/NIOSH Lockhart report, the MDPI 2024 systematic review, and Fehr et al. 2024 (Nature). Each metric targets a distinct failure mode in the gait cycle.</p>
+      <span class="section-tag" style="color:var(--v12-orange);">Safety technology</span>
+      <h1 class="section-title" style="color:white;">Every metric that matters, measured in every stride.</h1>
+      <p class="section-body" style="color:rgba(255,255,255,0.5); max-width:720px;">SmartStep monitors three interlocking systems continuously: how your feet move, how your weight is distributed, and where you are on site. Together, they give workers and safety managers a complete picture of risk, updated in real time throughout every shift.</p>
     </div>
   </section>
 
+  <!-- STF DETECTION METRICS -->
   <section style="padding-top:0; background:var(--v12-dark);">
     <div class="section-inner">
-      <div class="features-grid">
+      <span class="section-tag" style="color:var(--v12-orange);">Slip, trip and fall detection</span>
+      <h2 class="section-title" style="color:white; font-size:clamp(1.6rem,3vw,2.2rem);">Six kinematic metrics, each targeting a different way a worker can go down.</h2>
+      <div class="features-grid" style="margin-top:2.5rem;">
         <div class="feature-cell">
           <div class="feature-icon"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-          <h3>HCV — Heel Contact Velocity</h3>
-          <p>Primary slip indicator. Elevated heel velocity at initial contact correlates strongly with traction loss. The CDC/NIOSH Lockhart report identifies this as the most reliable real-time slip precursor available from wearable sensing.</p>
+          <h3>Heel Contact Velocity</h3>
+          <p>The first thing the insole measures when the heel strikes the ground is how fast it hit. A hard, fast heel strike is the clearest early warning of a slip about to happen, well before the worker loses their footing.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg></div>
-          <h3>RCOF — Required Coefficient of Friction</h3>
-          <p>Quantifies the friction demand placed on the floor surface per stride. Threshold exceedances predict slip onset and enable proactive surface risk flagging, useful for identifying hazardous floor zones before they cause an incident.</p>
+          <h3>Required Coefficient of Friction</h3>
+          <p>Every stride places a friction demand on the floor surface. SmartStep tracks this demand continuously, flagging when it exceeds what most surfaces can safely provide. That threshold breach is where slips begin.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
-          <h3>MTC — Minimum Toe Clearance</h3>
-          <p>The trip-specific metric. MTC narrows progressively with fatigue, making it the earliest detectable indicator of trip risk across a long shift. Validated by Fehr et al. 2024 (Nature) and the MDPI 2024 systematic review.</p>
+          <h3>Minimum Toe Clearance</h3>
+          <p>The gap between the toe and the ground during the swing phase of each step narrows gradually as fatigue sets in. SmartStep tracks this shrinkage stride by stride. A closing trend across a shift is the earliest indicator of trip risk there is.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
-          <h3>ZUPT — Zero Velocity Update</h3>
-          <p>Corrects sensor drift during the stance phase, enabling accurate stride length and cadence estimates across a 12-hour shift. Without this correction, errors accumulate over time and corrupt fatigue metrics.</p>
+          <h3>Zero Velocity Update</h3>
+          <p>Motion sensors drift over time. SmartStep corrects for this at every stance phase, keeping stride length and cadence readings accurate across a full 12-hour shift. Without this correction, fatigue readings become unreliable within hours.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-          <h3>SDI / SDII — Slip Distance</h3>
-          <p>Quantifies forward and lateral foot displacement after heel contact. Distinguishes recoverable stumbles from genuine fall-risk events, critical for maintaining worker trust by minimising false positive alerts.</p>
+          <h3>Slip Distance</h3>
+          <p>When the foot does slide, SmartStep measures how far it moved forward and sideways. This separates a minor stumble that the worker recovers from, from a genuine fall-risk event that needs escalating. Fewer false alarms means workers take real alerts seriously.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
-          <h3>COM — Centre of Mass displacement</h3>
-          <p>Tracks whole-body balance degradation over a shift. An early-warning signal for fall risk that precedes any discrete event, giving H&S managers a window to intervene proactively before a threshold is breached.</p>
+          <h3>Centre of Mass Displacement</h3>
+          <p>As the body's balance degrades over a long shift, the centre of mass shifts further from its ideal position with each step. SmartStep tracks this drift across the entire shift, giving H&S managers a heads-up before any single incident occurs.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <section>
+  <!-- GAIT AND PRESSURE SUITE -->
+  <section style="background:white;">
     <div class="section-inner">
-      <span class="section-tag">Incident response</span>
-      <h2 class="section-title">From detection to documented, automatically.</h2>
-      <p class="section-body">RIDDOR requires employers to report specified injuries to the HSE within 10 days. SmartStep generates the full evidentiary record the moment an event occurs, timestamped, GPS-precise, and immutable from the client.</p>
-      <div class="tech-split" style="margin-top:3rem;">
+      <span class="section-tag">Gait and pressure monitoring</span>
+      <h2 class="section-title">A continuous picture of how the worker is holding up.</h2>
+      <p class="section-body">Beyond detecting incidents, SmartStep tracks six gait and pressure metrics throughout every shift. These paint a picture of fatigue accumulation long before it becomes dangerous, giving workers visibility of their own condition and managers the data they need to plan safe rotations.</p>
+
+      <div class="use-cases" style="margin-top:3rem;">
+        <div class="use-case-card">
+          <span class="use-case-tag">Pressure</span>
+          <h3>Live plantar pressure heatmap</h3>
+          <p>A real-time colour map of how weight is distributed across the sole with every step. Uneven loading patterns, particularly a shift toward the heel or the outside edge, are early signs of compensatory gait under fatigue.</p>
+        </div>
+        <div class="use-case-card">
+          <span class="use-case-tag">Balance</span>
+          <h3>Left and right load distribution</h3>
+          <p>SmartStep continuously measures how evenly weight is split between the left and right foot. A consistent imbalance, even a subtle one, indicates the worker is favouring one leg and their gait is becoming asymmetric.</p>
+        </div>
+        <div class="use-case-card">
+          <span class="use-case-tag">Biomechanics</span>
+          <h3>Pronation and walking asymmetry</h3>
+          <p>The degree to which the foot rolls inward with each step, and the symmetry of the stride pattern between left and right, are both tracked continuously. Together they form a sensitive early-warning composite for cumulative fatigue.</p>
+        </div>
+        <div class="use-case-card">
+          <span class="use-case-tag">Performance</span>
+          <h3>Walking speed and cadence</h3>
+          <p>Walking speed is a well-established indicator of overall physical condition. A worker whose pace has dropped significantly by mid-shift is operating at a higher risk than their morning baseline, even if no incident has occurred yet.</p>
+        </div>
+        <div class="use-case-card">
+          <span class="use-case-tag">Fatigue</span>
+          <h3>Double support time</h3>
+          <p>The proportion of the gait cycle spent with both feet on the ground rises as the central nervous system compensates for tiredness. This is one of the most clinically established indicators of fatigue-related fall risk available from insole sensing.</p>
+        </div>
+        <div class="use-case-card">
+          <span class="use-case-tag">Overall score</span>
+          <h3>Composite gait score</h3>
+          <p>All six metrics are combined into a single score that updates throughout the shift. Workers see their own number in real time. Managers see colour-coded scores for every active worker on their dashboard, instantly showing who needs attention.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GPS AND GEOFENCING -->
+  <section style="background:var(--v12-dark);">
+    <div class="section-inner">
+      <span class="section-tag" style="color:var(--v12-orange);">Location and geofencing</span>
+      <h2 class="section-title" style="color:white;">Know where every worker is. Warn them before they enter danger.</h2>
+      <p class="section-body" style="color:rgba(255,255,255,0.5);">SmartStep's GPS layer operates continuously throughout each shift, independently of the main gait pipeline. Location data updates every 10 seconds to the organisational dashboard and is stamped server-side for a full, auditable location trail if an incident occurs.</p>
+
+      <div class="tech-split" style="margin-top:3.5rem;">
         <div>
-          <h3 style="font-family:var(--serif); font-size:1.5rem; margin-bottom:1.25rem;">On STF detection</h3>
-          <ul class="tech-list">
-            <li><div class="tech-dot"></div><div><h4>Vibration alert fires within 2 seconds</h4><p>The buzzer module triggers on both the insole and the smartphone simultaneously, the physical failsafe in high-noise environments where audio and visual cues can't get through.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>Movement snapshot captured</h4><p>The insole's chip captures the surrounding gait data and pushes a structured burst to the app, giving the incident record its full biomechanical context.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>Emergency contacts alerted within 10 seconds</h4><p>Designated contacts receive an automatic GPS-located alert. This directly addresses the HSE's 35 fatal falls from height in 2024/25, many involving lone workers with no way to call for help.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>Legally compliant record created</h4><p>An incident entry is written with a server-side timestamp, GPS coordinates, cause classification, and full movement precursor data. It cannot be altered from the device and can be exported within the 10-day reporting window.</p></div></li>
+          <h3 style="font-family:var(--serif); font-size:1.5rem; color:white; margin-bottom:1.25rem;">For workers</h3>
+          <ul class="tech-list" style="border-top:1px solid rgba(255,255,255,0.06);">
+            <li style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <div class="tech-dot"></div>
+              <div>
+                <h4 style="color:white;">Full-screen live map</h4>
+                <p style="color:rgba(255,255,255,0.5);">A Google Maps view centred on the worker's current position, with pinch-to-zoom, drag-to-pan, and satellite view. Before a session starts, it confirms that GPS is locking their position accurately.</p>
+              </div>
+            </li>
+            <li style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <div class="tech-dot"></div>
+              <div>
+                <h4 style="color:white;">High-risk zone overlays</h4>
+                <p style="color:rgba(255,255,255,0.5);">Areas designated as hazardous by the organisation are displayed as highlighted polygons on the map. Workers can see exactly where the danger zones are relative to their current position before they get close.</p>
+              </div>
+            </li>
+            <li style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <div class="tech-dot"></div>
+              <div>
+                <h4 style="color:white;">Haptic geofence alerts</h4>
+                <p style="color:rgba(255,255,255,0.5);">When a worker approaches a designated hazard boundary, the insole and phone vibrate automatically. No screen interaction required. The alert fires whether the worker is looking at the map or not.</p>
+              </div>
+            </li>
+            <li>
+              <div class="tech-dot"></div>
+              <div>
+                <h4 style="color:white;">Lone worker reassurance</h4>
+                <p style="color:rgba(255,255,255,0.5);">Knowing their location is being recorded and monitored gives lone workers in remote or high-risk environments a tangible safety net, independent of any incident occurring.</p>
+              </div>
+            </li>
           </ul>
         </div>
         <div>
-          <h3 style="font-family:var(--serif); font-size:1.5rem; margin-bottom:1.25rem;">What the manager sees</h3>
-          <ul class="tech-list">
-            <li><div class="tech-dot"></div><div><h4>Heel velocity and balance chart</h4><p>A time-series view of movement in the window around the incident, showing the biomechanical build-up before the event occurred.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>Bilateral toe clearance chart</h4><p>A left-right comparison across the preceding strides. Progressive narrowing on one side is a reliable trip precursor and supports root cause analysis.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>Stride asymmetry chart</h4><p>Gait symmetry score across the shift, revealing whether the incident followed a period of progressive fatigue accumulation that could have been intercepted earlier.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>Incident heatmap and GPS coordinates</h4><p>Precise incident location plotted on the organisational map. Repeated incidents in the same zone automatically flag it as a high-risk area for all workers on site.</p></div></li>
+          <h3 style="font-family:var(--serif); font-size:1.5rem; color:white; margin-bottom:1.25rem;">For managers</h3>
+          <ul class="tech-list" style="border-top:1px solid rgba(255,255,255,0.06);">
+            <li style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <div class="tech-dot"></div>
+              <div>
+                <h4 style="color:white;">Live fleet tracking map</h4>
+                <p style="color:rgba(255,255,255,0.5);">The organisational dashboard embeds a live Google Maps view showing every active worker as a GPS pin, updating every 10 seconds. H&S managers can see their entire workforce at a glance, including anyone approaching a flagged zone.</p>
+              </div>
+            </li>
+            <li style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <div class="tech-dot"></div>
+              <div>
+                <h4 style="color:white;">Automatic high-risk zone creation</h4>
+                <p style="color:rgba(255,255,255,0.5);">When incidents are logged, their GPS coordinates are recorded. Areas where multiple incidents cluster are automatically flagged as high-risk zones on the organisational map, building a data-driven picture of where on site is most dangerous over time.</p>
+              </div>
+            </li>
+            <li style="border-bottom:1px solid rgba(255,255,255,0.06);">
+              <div class="tech-dot"></div>
+              <div>
+                <h4 style="color:white;">GPS audit trail</h4>
+                <p style="color:rgba(255,255,255,0.5);">Every coordinate is server-timestamped. When an incident occurs, investigators have a complete, legally defensible record of exactly where the worker was and which direction they were heading in the minutes before it happened.</p>
+              </div>
+            </li>
+            <li>
+              <div class="tech-dot"></div>
+              <div>
+                <h4 style="color:white;">Incident location pinning</h4>
+                <p style="color:rgba(255,255,255,0.5);">Every incident record includes a precise GPS pin on the map. When an emergency alert fires, the organisation receives the worker's coordinates immediately, enabling a targeted extraction response rather than a site-wide search.</p>
+              </div>
+            </li>
           </ul>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- INCIDENT RESPONSE -->
+  <section>
+    <div class="section-inner">
+      <span class="section-tag">Incident response</span>
+      <h2 class="section-title">From the moment of detection to a complete legal record, in seconds.</h2>
+      <p class="section-body">When the insole detects a slip, trip or fall, a chain of automated actions begins. The worker is alerted physically. Emergency contacts are notified with their location. A 10-second biomechanical snapshot is captured and locked to the incident record. The whole process completes before a human has had a chance to react.</p>
+
+      <div class="tech-split" style="margin-top:3rem;">
+        <div>
+          <h3 style="font-family:var(--serif); font-size:1.5rem; margin-bottom:1.25rem;">What happens on detection</h3>
+          <ul class="tech-list">
+            <li><div class="tech-dot"></div><div><h4>Insole and phone vibrate within 2 seconds</h4><p>The physical alert fires on both the insole and the smartphone simultaneously. On a construction site or factory floor where ambient noise makes audio alerts useless, this is often the only channel that gets through.</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>10-second kinematic snapshot locked</h4><p>The insole captures the full biomechanical picture of the 10 seconds surrounding the event and transmits it to the app in a structured burst. This snapshot is the foundation of every incident report and root cause analysis.</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>Emergency contacts receive a GPS alert within 10 seconds</h4><p>Designated contacts get an automatic notification containing the worker's precise coordinates. For a lone worker on a remote site with no one nearby, this is the difference between a quick extraction and a prolonged emergency.</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>A permanent, tamper-proof record is created</h4><p>The incident is written to the cloud with a server-side timestamp, GPS pin, and full kinematic data. It cannot be edited from any device and can be exported for RIDDOR reporting within the legally required timeframe.</p></div></li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="font-family:var(--serif); font-size:1.5rem; margin-bottom:1.25rem;">What the manager's incident report contains</h3>
+          <ul class="tech-list">
+            <li><div class="tech-dot"></div><div><h4>Heel velocity and balance chart</h4><p>A time-series plot of heel contact velocity against centre of mass velocity across the 10-second window. The relationship between these two values reveals whether the event was a slip, a near-miss, or a fall.</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>Incident load concentration heatmap</h4><p>A frozen snapshot of plantar pressure distribution at the moment of the event. Heel-dominant loading suggests a slip. Forefoot or toe-dominant loading points toward a trip. A lateral spike indicates an ankle inversion.</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>Bilateral toe clearance chart</h4><p>Left and right toe clearance values plotted across the preceding strides. A narrowing trend on one side in the build-up to the incident is a reliable indicator that fatigue was a contributing factor.</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>Stride asymmetry chart</h4><p>The symmetry of the stride pattern across the full shift, showing whether the incident was an isolated event or the culmination of progressive gait deterioration that had been developing for hours.</p></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </div>
 
 
 <!-- ABOUT -->
 <div class="page" id="page-about">
+
+  <!-- HERO -->
   <div class="about-hero">
     <div class="about-hero-inner">
       <span class="section-tag">About us</span>
-      <h1>Safety technology, built from the ground up.</h1>
-      <p>Developed in collaboration with V12 Footwear as part of a Graduate Business Development Project, bringing academic rigour and commercial focus together.</p>
+      <h1>Your feet know more than you think.</h1>
+      <p>SmartStep is a collaboration between V12 Footwear and a University of Bath engineering team. Six subsystems. One boot. A single mission: get every worker home safely.</p>
     </div>
   </div>
-  <div class="about-content">
-    <div class="about-placeholder">
-      <span class="placeholder-tag">Content coming soon</span>
-      <h3>About us</h3>
-      <p>This section is reserved for team bios, the V12 partnership story, academic context, and project background.</p>
+
+  <!-- THE PROBLEM -->
+  <section style="background:white;">
+    <div class="section-inner">
+      <span class="section-tag">Why this exists</span>
+      <h2 class="section-title">A £22.9 billion problem that starts at your feet.</h2>
+      <p class="section-body">Workplace injury in Great Britain is not a rare edge case. It is a persistent, measurable, and largely preventable crisis. The boot is the worker's primary contact point with the environment that causes it.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:2rem; margin-top:3.5rem;">
+        <div style="text-align:center; padding:2rem 1.5rem; background:var(--v12-cream); border-radius:20px;">
+          <span style="font-family:var(--serif); font-size:3rem; color:var(--v12-orange); display:block; line-height:1; margin-bottom:0.5rem;">680k</span>
+          <p style="font-size:0.875rem; color:var(--v12-mid); line-height:1.5;">workers sustained a non-fatal injury in Great Britain in 2024/25</p>
+        </div>
+        <div style="text-align:center; padding:2rem 1.5rem; background:var(--v12-cream); border-radius:20px;">
+          <span style="font-family:var(--serif); font-size:3rem; color:var(--v12-orange); display:block; line-height:1; margin-bottom:0.5rem;">40.1m</span>
+          <p style="font-size:0.875rem; color:var(--v12-mid); line-height:1.5;">working days lost to workplace injury and ill health in a single year</p>
+        </div>
+        <div style="text-align:center; padding:2rem 1.5rem; background:var(--v12-cream); border-radius:20px;">
+          <span style="font-family:var(--serif); font-size:3rem; color:var(--v12-orange); display:block; line-height:1; margin-bottom:0.5rem;">£22.9bn</span>
+          <p style="font-size:0.875rem; color:var(--v12-mid); line-height:1.5;">estimated economic cost of workplace injuries and ill health to Britain</p>
+        </div>
+        <div style="text-align:center; padding:2rem 1.5rem; background:var(--v12-cream); border-radius:20px;">
+          <span style="font-family:var(--serif); font-size:3rem; color:var(--v12-orange); display:block; line-height:1; margin-bottom:0.5rem;">30%</span>
+          <p style="font-size:0.875rem; color:var(--v12-mid); line-height:1.5;">of all reported injuries caused by slips, trips and falls, the single largest category</p>
+        </div>
+        <div style="text-align:center; padding:2rem 1.5rem; background:var(--v12-cream); border-radius:20px;">
+          <span style="font-family:var(--serif); font-size:3rem; color:var(--v12-orange); display:block; line-height:1; margin-bottom:0.5rem;">22%</span>
+          <p style="font-size:0.875rem; color:var(--v12-mid); line-height:1.5;">of all lost-work-day cases in oil and gas are same-height slips and trips</p>
+        </div>
+        <div style="text-align:center; padding:2rem 1.5rem; background:var(--v12-cream); border-radius:20px;">
+          <span style="font-family:var(--serif); font-size:3rem; color:var(--v12-orange); display:block; line-height:1; margin-bottom:0.5rem;">£512m</span>
+          <p style="font-size:0.875rem; color:var(--v12-mid); line-height:1.5;">cost to employers from slip and trip accidents alone each year in lost time and disruption</p>
+        </div>
+      </div>
+
+      <p style="font-size:1rem; line-height:1.75; color:var(--v12-mid); margin-top:3rem; max-width:680px;">Current safety footwear meets every standard required of it. It resists impact, puncture, and compression. But it does none of this proactively. It cannot monitor whether the worker wearing it is fatiguing, approaching a hazard zone, or about to lose their footing. The foot is the worker's primary contact point with the ground, and it has been producing safety data that no one has been collecting until now.</p>
     </div>
-  </div>
+  </section>
+
+  <!-- V12 AND THE BRIEF -->
+  <section style="background:var(--v12-dark);">
+    <div class="section-inner">
+      <span class="section-tag" style="color:var(--v12-orange);">The partnership</span>
+      <h2 class="section-title" style="color:white;">V12 Footwear set the brief. We built the answer.</h2>
+
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:4rem; margin-top:3rem; align-items:start;">
+        <div>
+          <p style="font-size:1rem; line-height:1.75; color:rgba(255,255,255,0.55); margin-bottom:1.5rem;">V12 Footwear is a British family-run safety footwear manufacturer founded in 1998, headquartered in Chippenham, Wiltshire. Built by brothers Andy and Ben Turner as fifth-generation shoemakers, V12 has grown into a globally recognised brand supplying EN ISO 20345-certified footwear to industries including oil and gas, construction, and manufacturing. Their clients include BP, Rolls-Royce, Honda, Sky, and London Underground.</p>
+          <p style="font-size:1rem; line-height:1.75; color:rgba(255,255,255,0.55);">V12 holds ZeroCarbon® certification from the Sustainable Future Group, reflecting a commitment to sustainability that extends into product development. Their brief to our team was straightforward in its ambition and significant in its technical challenge.</p>
+        </div>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:2.5rem;">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:1rem;">The brief, in V12's own words</span>
+          <p style="font-size:1.05rem; line-height:1.75; color:white; font-family:var(--serif); font-style:italic; margin-bottom:1.5rem;">"Our feet are the key connection point between our bodies and the ground. Our challenge is to build a method of connecting their movement with data to unlock solutions to slips, trips and falls, temperature control, and posture."</p>
+          <p style="font-size:0.875rem; color:rgba(255,255,255,0.45);">V12 Footwear, Project Brief 2026</p>
+        </div>
+      </div>
+
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-top:3rem;">
+        <div style="background:rgba(232,93,47,0.1); border:1px solid rgba(232,93,47,0.2); border-radius:16px; padding:1.75rem;">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.75rem;">Challenge 1</span>
+          <h4 style="color:white; font-size:1rem; margin-bottom:0.5rem;">Slips, trips and falls</h4>
+          <p style="font-size:0.875rem; color:rgba(255,255,255,0.5); line-height:1.6;">The number one cause of accidents in the workplace. At best, a twisted ankle. At worst, fatal if the worker is alone and undetected.</p>
+        </div>
+        <div style="background:rgba(232,93,47,0.1); border:1px solid rgba(232,93,47,0.2); border-radius:16px; padding:1.75rem;">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.75rem;">Challenge 2</span>
+          <h4 style="color:white; font-size:1rem; margin-bottom:0.5rem;">Temperature control</h4>
+          <p style="font-size:0.875rem; color:rgba(255,255,255,0.5); line-height:1.6;">The number one reason for uncomfortable feet throughout a shift. Heat and moisture build-up reduces concentration, promotes infection, and accelerates fatigue.</p>
+        </div>
+        <div style="background:rgba(232,93,47,0.1); border:1px solid rgba(232,93,47,0.2); border-radius:16px; padding:1.75rem;">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.75rem;">Challenge 3</span>
+          <h4 style="color:white; font-size:1rem; margin-bottom:0.5rem;">Posture and gait</h4>
+          <p style="font-size:0.875rem; color:rgba(255,255,255,0.5); line-height:1.6;">Is the way a worker walks creating undue pressure on their feet? Poor gait under fatigue is both a health risk and a fall precursor that compounds over a long shift.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMERCIAL OPPORTUNITY -->
+  <section style="background:var(--v12-cream);">
+    <div class="section-inner">
+      <span class="section-tag">Commercial viability</span>
+      <h2 class="section-title">The market is ready. The product gap is real. The numbers add up.</h2>
+      <p class="section-body">The market for smart safety wearables is growing fast, and the smart footwear segment is the least developed category within it. No existing product combines real-time gait monitoring, pressure sensing, GPS tracking, and incident detection in a single safety boot. We have costed the full journey from working prototype to scaled commercial launch.</p>
+
+      <!-- COST AND PRICING -->
+      <h3 style="font-family:var(--serif); font-size:1.6rem; margin:3.5rem 0 1.5rem;">What it costs to make, and what it sells for</h3>
+      <p style="font-size:0.95rem; line-height:1.75; color:var(--v12-mid); margin-bottom:2rem; max-width:720px;">Manufacturing cost falls significantly as production volume grows. The electronics are the biggest cost driver at low volume, but become far more affordable at scale through bulk component purchasing and automated assembly. Three scenarios show how the numbers change.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; margin-bottom:2.5rem;">
+        <div style="background:white; border-radius:16px; padding:2rem; border:1px solid rgba(0,0,0,0.07); text-align:center;">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-mid); font-weight:500; display:block; margin-bottom:0.75rem;">Early prototype</span>
+          <span style="font-family:var(--serif); font-size:2.4rem; color:var(--v12-black); display:block; line-height:1; margin-bottom:0.4rem;">£369</span>
+          <p style="font-size:0.8rem; color:var(--v12-mid);">per pair to produce. High cost reflects small quantities and hand assembly. Useful for testing and validation, not intended for sale at this stage.</p>
+        </div>
+        <div style="background:white; border-radius:16px; padding:2rem; border:2px solid var(--v12-orange); text-align:center;">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.75rem;">1,000-unit launch</span>
+          <span style="font-family:var(--serif); font-size:2.4rem; color:var(--v12-orange); display:block; line-height:1; margin-bottom:0.4rem;">£190</span>
+          <p style="font-size:0.8rem; color:var(--v12-mid);">per pair to produce. Volume purchasing and semi-automated assembly halve the electronics cost. This is the recommended first commercial launch scenario.</p>
+        </div>
+        <div style="background:white; border-radius:16px; padding:2rem; border:1px solid rgba(0,0,0,0.07); text-align:center;">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-mid); font-weight:500; display:block; margin-bottom:0.75rem;">5,000-unit batch</span>
+          <span style="font-family:var(--serif); font-size:2.4rem; color:var(--v12-black); display:block; line-height:1; margin-bottom:0.4rem;">£139</span>
+          <p style="font-size:0.8rem; color:var(--v12-mid);">per pair to produce. Full production scale with dedicated assembly at V12. Custom-manufactured sensor arrays replace off-the-shelf components, cutting sensor costs by 80%.</p>
+        </div>
+      </div>
+
+      <!-- PRICING AND BREAK-EVEN -->
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:3rem; margin-bottom:3rem; align-items:start;">
+        <div>
+          <h4 style="font-family:var(--serif); font-size:1.25rem; margin-bottom:1rem;">Pricing and break-even</h4>
+          <p style="font-size:0.875rem; line-height:1.7; color:var(--v12-mid); margin-bottom:1.25rem;">SmartStep is sold to employers and safety managers, not directly to individual workers. This is deliberate: the safety data SmartStep generates is most valuable to the organisation responsible for keeping workers safe, and procurement decisions in construction, oil and gas, and manufacturing happen at company level.</p>
+          <p style="font-size:0.875rem; line-height:1.7; color:var(--v12-mid);">A recommended launch price of <strong style="color:var(--v12-black);">£349.99 per pair</strong> generates a positive return on each unit sold, while remaining well within employer PPE budgets. Adding a <strong style="color:var(--v12-black);">£5 per month subscription</strong> for access to the safety analytics platform, break-even on the full investment is reached at roughly <strong style="color:var(--v12-black);">1,800 pairs sold.</strong> For higher-risk sectors like oil and gas where the safety case is strongest, a higher price point of £429.99 reduces break-even to under 1,200 pairs.</p>
+        </div>
+        <div>
+          <h4 style="font-family:var(--serif); font-size:1.25rem; margin-bottom:1rem;">What it costs to get to market</h4>
+          <p style="font-size:0.875rem; line-height:1.7; color:var(--v12-mid); margin-bottom:1.25rem;">The total investment needed to take SmartStep from its current working prototype to a certified product ready for commercial sale is estimated at <strong style="color:var(--v12-black);">around £180,000.</strong> This covers tooling, software, product certification, and a paid pilot with real employers.</p>
+          <div style="display:flex; flex-direction:column; gap:0.6rem;">
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:0.7rem 1rem; background:white; border-radius:8px; font-size:0.85rem;">
+              <span style="color:var(--v12-mid);">Tooling and manufacturing setup</span><strong>£43,925</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:0.7rem 1rem; background:white; border-radius:8px; font-size:0.85rem;">
+              <span style="color:var(--v12-mid);">App, dashboard and data platform</span><strong>£43,500</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:0.7rem 1rem; background:white; border-radius:8px; font-size:0.85rem;">
+              <span style="color:var(--v12-mid);">Safety certification and compliance</span><strong>£32,000</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:0.7rem 1rem; background:white; border-radius:8px; font-size:0.85rem;">
+              <span style="color:var(--v12-mid);">Testing and field validation</span><strong>£13,250</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; padding:0.7rem 1rem; background:var(--v12-orange); border-radius:8px; font-size:0.85rem; color:white;">
+              <span>Total estimated investment</span><strong>£179,601</strong>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LCA -->
+      <h3 style="font-family:var(--serif); font-size:1.6rem; margin-bottom:1.5rem;">Environmental impact and sustainability</h3>
+      <p style="font-size:0.95rem; line-height:1.75; color:var(--v12-mid); margin-bottom:2rem; max-width:720px;">A full cradle-to-grave environmental assessment was carried out covering every stage of the product's life, from sourcing raw materials through to disposal. The total carbon footprint is roughly equivalent to a long-haul flight per pair over a two-year working life.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px,1fr)); gap:1.5rem; margin-bottom:2rem;">
+        <div style="padding:1.5rem; background:white; border-radius:14px; border:1px solid rgba(0,0,0,0.07);">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.5rem;">Where the impact comes from</span>
+          <h4 style="font-size:0.95rem; font-weight:500; margin-bottom:0.4rem;">Manufacturing the components, not using them</h4>
+          <p style="font-size:0.85rem; color:var(--v12-mid); line-height:1.6;">Over 90% of the product's environmental footprint comes from manufacturing the electronic components, not from running them. The good news is that the electronics are tiny and the boot runs on less power than a small LED bulb. Future component choices can meaningfully reduce this figure.</p>
+        </div>
+        <div style="padding:1.5rem; background:white; border-radius:14px; border:1px solid rgba(0,0,0,0.07);">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.5rem;">Day-to-day running</span>
+          <h4 style="font-size:0.95rem; font-weight:500; margin-bottom:0.4rem;">Almost nothing once it's in use</h4>
+          <p style="font-size:0.85rem; color:var(--v12-mid); line-height:1.6;">Charging the boot once per shift across a two-year working life contributes less than 4% of the total carbon footprint. As the UK electricity grid gets cleaner, this falls further with no changes to the product at all.</p>
+        </div>
+        <div style="padding:1.5rem; background:white; border-radius:14px; border:1px solid rgba(0,0,0,0.07);">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.5rem;">Built to last longer</span>
+          <h4 style="font-size:0.95rem; font-weight:500; margin-bottom:0.4rem;">Replace the part, not the whole boot</h4>
+          <p style="font-size:0.85rem; color:var(--v12-mid); line-height:1.6;">The battery and electronics slide out for replacement. When they reach the end of their life, the employer replaces only those components rather than the entire boot. This reduces waste, lowers the buyer's long-term cost, and creates a natural repeat revenue stream for V12.</p>
+        </div>
+        <div style="padding:1.5rem; background:white; border-radius:14px; border:1px solid rgba(0,0,0,0.07);">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.5rem;">End of life</span>
+          <h4 style="font-size:0.95rem; font-weight:500; margin-bottom:0.4rem;">A take-back scheme as a selling point</h4>
+          <p style="font-size:0.85rem; color:var(--v12-mid); line-height:1.6;">Batteries and circuit boards require responsible recycling. A V12 take-back programme turns that obligation into a commercial differentiator, reinforcing the brand's ZeroCarbon credentials while keeping competitors without recycling infrastructure at a disadvantage.</p>
+        </div>
+      </div>
+
+      <!-- DEVELOPMENT ROADMAP -->
+      <h3 style="font-family:var(--serif); font-size:1.6rem; margin-bottom:1.5rem;">The road to market</h3>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:0; border-radius:16px; overflow:hidden; border:1px solid rgba(0,0,0,0.09);">
+        <div style="padding:1.75rem; background:var(--v12-dark); border-right:1px solid rgba(255,255,255,0.06);">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.5rem;">Now</span>
+          <h4 style="color:white; font-size:0.95rem; margin-bottom:0.5rem;">Working prototype</h4>
+          <p style="font-size:0.8rem; color:rgba(255,255,255,0.5); line-height:1.6;">The insole senses, the app displays, and the incident detection pipeline works end-to-end. Available on both iPhone and Android.</p>
+        </div>
+        <div style="padding:1.75rem; background:rgba(26,24,20,0.9); border-right:1px solid rgba(255,255,255,0.06);">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.5rem;">Year 1 to 2</span>
+          <h4 style="color:white; font-size:0.95rem; margin-bottom:0.5rem;">Paid employer pilot</h4>
+          <p style="font-size:0.8rem; color:rgba(255,255,255,0.5); line-height:1.6;">50 pairs across 3 real worksites. Gather performance data, prove durability, and validate the safety benefits with paying customers before a broader launch.</p>
+        </div>
+        <div style="padding:1.75rem; background:rgba(26,24,20,0.75); border-right:1px solid rgba(255,255,255,0.06);">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.5rem;">Year 2 to 4</span>
+          <h4 style="color:white; font-size:0.95rem; margin-bottom:0.5rem;">Certified and on sale</h4>
+          <p style="font-size:0.8rem; color:rgba(255,255,255,0.5); line-height:1.6;">Safety certifications secured for UK and EU markets. Controlled 1,000-unit launch to employer accounts. Subscription platform live and generating recurring revenue.</p>
+        </div>
+        <div style="padding:1.75rem; background:rgba(26,24,20,0.6);">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.5rem;">Year 4 onwards</span>
+          <h4 style="color:white; font-size:0.95rem; margin-bottom:0.5rem;">Full-scale production</h4>
+          <p style="font-size:0.8rem; color:rgba(255,255,255,0.5); line-height:1.6;">5,000-unit batches manufactured at V12. Patent on the modular sleeve architecture filed. Cost per pair falls to £139, improving margins across all price points.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:2.5rem; padding:2rem; background:var(--v12-dark); border-radius:16px;">
+        <p style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; margin-bottom:0.75rem;">A legal push in the right direction</p>
+        <p style="font-size:0.95rem; line-height:1.75; color:rgba(255,255,255,0.65); max-width:780px;">Since 2022, UK employers are legally required to provide safety equipment to a much wider range of workers, including those on zero-hour and short-term contracts. This expanded the potential customer base significantly. SmartStep does not just help employers meet this obligation. It gives them the data to prove they are doing so, which has real value when it comes to insurance, compliance audits, and any legal claim arising from a workplace injury.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE TEAM -->
+  <section style="background:white;">
+    <div class="section-inner">
+      <span class="section-tag">The engineering team</span>
+      <h2 class="section-title">Six subsystems. One product.</h2>
+      <p class="section-body">SmartStep was developed by a six-person Mechanical Engineering team at the University of Bath, working directly with V12 Footwear. Each engineer owned a distinct technical subsystem. All six had to integrate into a single coherent product built on V12's Bison IGS VR600.01 platform.</p>
+
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(300px, 1fr)); gap:2rem; margin-top:3.5rem;">
+
+        <div style="background:var(--v12-cream); border-radius:20px; padding:2rem; border-top:3px solid var(--v12-orange);">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.5rem;">Subsystem 1</span>
+          <h3 style="font-family:var(--serif); font-size:1.3rem; margin-bottom:1rem;">System Integration</h3>
+          <p style="font-size:0.875rem; color:var(--v12-mid); line-height:1.65;">Responsible for the connective framework across all six subsystems, defining the interfaces where power, data, and physical loads are exchanged. This work determined the pressure sensor configuration, battery selection and placement, haptic actuator location, wiring routing, and the overall insole layer stack. Without a robust integration strategy, the individual subsystems cannot function as a coherent product.</p>
+          <div style="margin-top:1.25rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">FSR pressure matrix</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">Li-Ion battery</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">LRA haptic actuator</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">System architecture</span>
+          </div>
+        </div>
+
+        <div style="background:var(--v12-cream); border-radius:20px; padding:2rem; border-top:3px solid var(--v12-orange);">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.5rem;">Subsystem 2</span>
+          <h3 style="font-family:var(--serif); font-size:1.3rem; margin-bottom:1rem;">Outsole Redesign</h3>
+          <p style="font-size:0.875rem; color:var(--v12-mid); line-height:1.65;">Responsible for redesigning the heel and forefoot tread geometry of V12's existing IGS sole to strengthen passive slip resistance. The work benchmarked the certified Bison slip performance against EN ISO 20345 and ISO 13287, identified lubricated steel flat as the critical failure condition, and used material screening alongside FEA comparison of tread concepts to select a geometry and material that improves SRC performance without compromising antistatic properties, weight, or certification routes.</p>
+          <div style="margin-top:1.25rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">Slip resistance (SRC)</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">FEA tread analysis</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">EN ISO 20345</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">IGS integration</span>
+          </div>
+        </div>
+
+        <div style="background:var(--v12-cream); border-radius:20px; padding:2rem; border-top:3px solid var(--v12-orange);">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.5rem;">Subsystem 3</span>
+          <h3 style="font-family:var(--serif); font-size:1.3rem; margin-bottom:1rem;">Temperature and Moisture</h3>
+          <p style="font-size:0.875rem; color:var(--v12-mid); line-height:1.65;">Responsible for both passive environmental regulation and active monitoring of in-shoe thermal and moisture conditions. Each foot can produce 14 to 57g of sweat per hour. Prolonged moisture build-up degrades skin integrity, promotes infection, and reduces concentration during high-risk tasks. The subsystem integrates a moisture-wicking thermally dissipative insole layer, a replaceable absorption pad, and a thermistor feeding real-time temperature data to the MCU.</p>
+          <div style="margin-top:1.25rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">Thermistor sensing</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">Moisture-wicking insole</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">SAP absorption pad</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">Microclimate management</span>
+          </div>
+        </div>
+
+        <div style="background:var(--v12-cream); border-radius:20px; padding:2rem; border-top:3px solid rgba(232,93,47,0.4);">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.5rem;">Subsystem 4</span>
+          <h3 style="font-family:var(--serif); font-size:1.3rem; margin-bottom:1rem;">Electronics and Sensing</h3>
+          <p style="font-size:0.875rem; color:var(--v12-mid); line-height:1.65;">Responsible for the IMU, GPS module, and signal-conditioning electronics that fuse all sensor outputs at the microcontroller. This is the intelligence layer that transforms raw physical signals into the gait metrics and incident flags the app depends on. This subsystem specifies the MCU architecture, BLE radio configuration, sensor fusion algorithms, and the sealed electronics enclosure that must withstand IP67 ingress conditions while fitting within the arch of the boot.</p>
+          <div style="margin-top:1.25rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">6-axis IMU</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">GPS module</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">nRF52840 MCU and BLE</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">Sensor fusion</span>
+          </div>
+        </div>
+
+        <div style="background:var(--v12-cream); border-radius:20px; padding:2rem; border-top:3px solid var(--v12-orange);">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.5rem;">Subsystem 5</span>
+          <h3 style="font-family:var(--serif); font-size:1.3rem; margin-bottom:1rem;">Companion App</h3>
+          <p style="font-size:0.875rem; color:var(--v12-mid); line-height:1.65;">Responsible for the Flutter companion app that serves as the display layer for all sensor data and the safety management interface for both individual workers and H&S managers. The app implements a BLOC-driven architecture, BLE GATT connection pipeline, dual Firestore and Hive data strategy, real-time plantar pressure heatmap, GPS fleet tracking with geofenced high-risk zones, RIDDOR-compliant incident logging with four biomechanical precursor charts, and a two-role access control system.</p>
+          <div style="margin-top:1.25rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">Flutter / Dart</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">Firebase and Firestore</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">BLE GATT pipeline</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">RIDDOR incident log</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">GPS geofencing</span>
+          </div>
+        </div>
+
+        <div style="background:var(--v12-cream); border-radius:20px; padding:2rem; border-top:3px solid var(--v12-orange);">
+          <span style="font-size:0.7rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--v12-orange); font-weight:500; display:block; margin-bottom:0.5rem;">Subsystem 6</span>
+          <h3 style="font-family:var(--serif); font-size:1.3rem; margin-bottom:1rem;">Manufacturing and Materials</h3>
+          <p style="font-size:0.875rem; color:var(--v12-mid); line-height:1.65;">Responsible for translating the overall system concept into a physically realisable product within V12's existing production framework. This work covers the magnetic gasket battery closure mechanism, cable routing and pogo pin connector architecture, smart insole assembly and integration sequence, outsole cementing process, end-of-line quality control including 100% IP67 seal testing, lifecycle cost analysis, and supply chain considerations.</p>
+          <div style="margin-top:1.25rem; display:flex; flex-wrap:wrap; gap:0.5rem;">
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">Magnetic gasket closure</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">Pogo pin connectors</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">IP67 QC protocol</span>
+            <span style="background:white; border:1px solid rgba(0,0,0,0.09); border-radius:8px; padding:0.3rem 0.7rem; font-size:0.75rem; font-weight:500;">Carbon lifecycle audit</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- UNIVERSITY -->
+  <section style="background:var(--v12-dark);">
+    <div class="section-inner" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:3rem;">
+      <div style="max-width:620px;">
+        <span class="section-tag" style="color:var(--v12-orange);">Academic context</span>
+        <h2 class="section-title" style="color:white; font-size:clamp(1.6rem,3vw,2.2rem);">University of Bath, Department of Mechanical Engineering</h2>
+        <p style="font-size:1rem; line-height:1.75; color:rgba(255,255,255,0.55);">SmartStep is the output of a Group Business and Design Project in which student teams work directly with industry partners to solve real engineering challenges. Group G26 was briefed by V12 Footwear. The six technical reports that underpin this work represent over 50,000 words of engineering analysis, specification, and validated design work produced in 2025/26.</p>
+      </div>
+      <div style="display:flex; flex-direction:column; gap:1.25rem; min-width:240px;">
+        <div style="padding:1.25rem 1.5rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:14px;">
+          <p style="font-size:0.75rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.3rem;">Industry partner</p>
+          <p style="color:white; font-weight:500;">V12 Footwear</p>
+          <p style="font-size:0.85rem; color:rgba(255,255,255,0.45);">Chippenham, Wiltshire, UK</p>
+        </div>
+        <div style="padding:1.25rem 1.5rem; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:14px;">
+          <p style="font-size:0.75rem; color:rgba(255,255,255,0.4); text-transform:uppercase; letter-spacing:0.08em; margin-bottom:0.3rem;">Institution</p>
+          <p style="color:white; font-weight:500;">University of Bath</p>
+          <p style="font-size:0.85rem; color:rgba(255,255,255,0.45);">Department of Mechanical Engineering, 2025/26</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </div>
 
 
@@ -711,7 +1139,7 @@
           </div>
           <div style="margin-top:2rem; background:var(--v12-cream); border:1.5px solid rgba(0,0,0,0.08); border-radius:16px; padding:1.5rem;">
             <p style="font-size:0.75rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--v12-orange); margin-bottom:0.5rem;">Academic project</p>
-            <p style="font-size:0.875rem; line-height:1.65; color:var(--v12-mid);">SmartStep is a Graduate Business Development Project in partnership with V12 Footwear. Enquiries about the research methodology and technical specification are welcome.</p>
+            <p style="font-size:0.875rem; line-height:1.65; color:var(--v12-mid);">SmartStep is a Group Business and Design Project in partnership with V12 Footwear. Enquiries about the research methodology and technical specification are welcome.</p>
           </div>
         </div>
       </div>
@@ -752,7 +1180,7 @@
       </div>
     </div>
     <hr class="footer-divider">
-    <p style="text-align:center;">© 2026 V12 SmartStep. Group Design & Business Project in collaboration with <a href="https://www.v12footwear.com" target="_blank" rel="noopener">V12 Footwear</a>.</p>
+    <p style="text-align:center;">© 2026 V12 SmartStep. Group Business and Design Project in collaboration with <a href="https://www.v12footwear.com" target="_blank" rel="noopener">V12 Footwear</a>.</p>
   </div>
 </footer>
 
