@@ -261,7 +261,7 @@
       <div>
         <div class="hero-eyebrow fade-in">In partnership with V12 Footwear</div>
         <h1 class="fade-in delay-1">A boot that <em>feels</em> every step you take.</h1>
-        <p class="hero-sub fade-in delay-2">SmartStep is a removable smart insole designed for V12's existing boot range. Seven engineered layers detect fatigue, slips, trips and falls in real time — and alert workers and managers before incidents escalate.</p>
+        <p class="hero-sub fade-in delay-2">SmartStep is a removable smart insole designed for V12's existing boot range. Seven engineered layers detect fatigue, slips, trips and falls in real time, alerting workers and managers before incidents escalate.</p>
         <div class="hero-actions fade-in delay-3">
           <a href="#" class="btn-primary" onclick="showPage('product'); return false;">See how it's built</a>
           <a href="#" class="btn-ghost" onclick="showPage('app'); return false;">Explore the app →</a>
@@ -285,7 +285,7 @@
           </svg>
           <div class="insole-metrics">
             <div class="metric-pill"><div class="metric-label">Gait score</div><div class="metric-value orange">94 / 100</div></div>
-            <div class="metric-pill"><div class="metric-label">STF events</div><div class="metric-value">0 today</div></div>
+            <div class="metric-pill"><div class="metric-label">Slips, trips and falls</div><div class="metric-value">0 today</div></div>
             <div class="metric-pill"><div class="metric-label">Temperature</div><div class="metric-value">34.2 °C</div></div>
             <div class="metric-pill"><div class="metric-label">Shift time</div><div class="metric-value orange">6h 22m</div></div>
           </div>
@@ -336,8 +336,6 @@
         <span class="badge">UK GDPR</span>
         <span class="badge">WCAG AA</span>
         <span class="badge">HSE Workplace Safety</span>
-        <span class="badge">BLE GATT Spec</span>
-        <span class="badge">GaitAnalysis+ ICC 0.91</span>
       </div>
     </div>
   </div>
@@ -349,7 +347,7 @@
       <p class="section-body">SmartStep is removable and fits all V12 boot models. No retooling, no replacement boots, and no per-user calibration — V12's pre-loaded sole geometry handles that.</p>
       <div class="steps">
         <div class="step"><span class="step-num">01</span><h3>Sense</h3><p>The FSR pressure matrix and 6-axis IMU capture plantar load and full kinematic data at up to 100 Hz. Micro-thermistors and humidity sensors monitor foot temperature and moisture across the full shift.</p></div>
-        <div class="step"><span class="step-num">02</span><h3>Process</h3><p>The onboard MCU fuses all sensor data to compute gait metrics and classify STF events at the edge — before anything is sent to the phone. This keeps BLE bandwidth low and battery life long.</p></div>
+        <div class="step"><span class="step-num">02</span><h3>Process</h3><p>The onboard MCU fuses all sensor data to compute gait metrics and classify accidents at the edge — before anything is sent to the phone. This keeps BLE bandwidth low and battery life long.</p></div>
         <div class="step"><span class="step-num">03</span><h3>Alert</h3><p>A haptic buzzer above the metatarsal fires within 2 seconds of a detected threat. It's the physical last resort — a warning that reaches the worker even when audio and visual cues can't.</p></div>
         <div class="step"><span class="step-num">04</span><h3>Report</h3><p>At shift end the app compiles gait data, incident coordinates, and kinematic precursor metrics into a RIDDOR-compliant payload and syncs to Firestore — ready for H&S root cause analysis.</p></div>
       </div>
@@ -422,10 +420,10 @@
           <h2 style="font-family:var(--serif); font-size:2rem; letter-spacing:-0.02em; margin-bottom:0.5rem;">What's inside the IC</h2>
           <ul class="tech-list">
             <li><div class="tech-dot"></div><div><h4>6-axis IMU</h4><p>3-axis accelerometer + gyroscope. Captures full kinematic data per stride. ZUPT correction eliminates drift across a 12-hour shift.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>FSR pressure matrix</h4><p>Biocompatible array delivering plantar load heatmaps at 60–120 FPS. Benchmarked against GaitAnalysis+ (ICC = 0.91).</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>FSR pressure matrix</h4><p>Biocompatible array delivering plantar load heatmaps at 60–120 FPS. .</p></div></li>
             <li><div class="tech-dot"></div><div><h4>GPS module</h4><p>Triangulates user location for geofencing and incident coordinate logging. GPS writes directly to Firestore, independent of BLE telemetry.</p></div></li>
             <li><div class="tech-dot"></div><div><h4>Micro-thermistors & humidity sensors</h4><p>Monitor foot and electronics temperature continuously. App alerts within 5 seconds when temperature exceeds 43 °C — protecting both the worker and the device.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>BLE 5.0 radio</h4><p>Throttled to 0.1–0.2 Hz during normal operation to preserve battery. Escalates immediately on STF detection, pushing a 10-second kinematic snapshot to the app.</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>BLE 5.0 radio</h4><p>Throttled to 0.1–0.2 Hz during normal operation to preserve battery. Escalates immediately on incident detection, pushing a 10-second kinematic snapshot to the app.</p></div></li>
           </ul>
         </div>
         <div>
@@ -437,7 +435,7 @@
             <tr><td>Sampling rate</td><td>Up to 100 Hz</td></tr>
             <tr><td>Pressure frame rate</td><td>60–120 FPS</td></tr>
             <tr><td>BLE cadence (normal)</td><td>0.1–0.2 Hz</td></tr>
-            <tr><td>BLE cadence (STF alert)</td><td>Immediate burst</td></tr>
+            <tr><td>BLE cadence (incident alert)</td><td>Immediate burst</td></tr>
             <tr><td>Haptic alert latency</td><td>&lt; 2 seconds</td></tr>
             <tr><td>Emergency alert latency</td><td>&lt; 10 seconds</td></tr>
             <tr><td>Shift battery life</td><td>12 hours</td></tr>
@@ -598,7 +596,7 @@
       <p class="section-body">RIDDOR requires employers to report specified injuries to the HSE within 10 days. SmartStep generates the full evidentiary record the moment an event occurs — timestamped, GPS-precise, and immutable from the client.</p>
       <div class="tech-split" style="margin-top:3rem;">
         <div>
-          <h3 style="font-family:var(--serif); font-size:1.5rem; margin-bottom:1.25rem;">On STF detection</h3>
+          <h3 style="font-family:var(--serif); font-size:1.5rem; margin-bottom:1.25rem;">On incident detection</h3>
           <ul class="tech-list">
             <li><div class="tech-dot"></div><div><h4>Haptic alert fires (&lt; 2 s)</h4><p>Buzzer module above the metatarsal triggers on both insole and smartphone — the physical failsafe in high-noise environments where audio and visual cues fail.</p></div></li>
             <li><div class="tech-dot"></div><div><h4>10-second kinematic snapshot captured</h4><p>MCU accumulates the surrounding gait data — HCV, COM, MTC, bilateral asymmetry — and pushes a structured burst to the app via BLE at 100 Hz transfer rate.</p></div></li>
@@ -722,7 +720,7 @@
       </div>
     </div>
     <hr class="footer-divider">
-    <p style="text-align:center;">© 2025 V12 SmartStep — Graduate Business Development Project. Built in collaboration with <a href="https://www.v12footwear.com" target="_blank" rel="noopener">V12 Footwear</a>.</p>
+    <p style="text-align:center;">© 2026 V12 SmartStep — Group Business and Design Project. Built in collaboration with <a href="https://www.v12footwear.com" target="_blank" rel="noopener">V12 Footwear</a>.</p>
   </div>
 </footer>
  
