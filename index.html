@@ -20,11 +20,11 @@
     --serif: 'DM Serif Display', Georgia, serif;
     --sans: 'DM Sans', system-ui, sans-serif;
   }
- 
+
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
   body { font-family: var(--sans); background: var(--v12-cream); color: var(--v12-black); overflow-x: hidden; }
- 
+
   /* NAV */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
@@ -47,18 +47,18 @@
   .nav-cta:hover { background: var(--v12-orange-light) !important; }
   .hamburger { display: none; background: none; border: none; cursor: pointer; flex-direction: column; gap: 5px; padding: 4px; }
   .hamburger span { display: block; width: 22px; height: 1.5px; background: var(--v12-black); }
- 
+
   /* PAGES */
   .page { display: none; padding-top: var(--nav-h); min-height: 100vh; }
   .page.active { display: block; }
- 
+
   /* SHARED */
   section { padding: 5rem clamp(1.5rem, 5vw, 3rem); }
   .section-inner { max-width: var(--max-w); margin: 0 auto; }
   .section-tag { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--v12-orange); margin-bottom: 1rem; display: block; }
   .section-title { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 1.25rem; }
   .section-body { font-size: 1.05rem; line-height: 1.75; color: var(--v12-mid); max-width: 640px; }
- 
+
   /* HERO */
   .hero { min-height: calc(100vh - var(--nav-h)); display: grid; grid-template-columns: 1fr 1fr; align-items: center; max-width: var(--max-w); margin: 0 auto; padding: 5rem clamp(1.5rem, 5vw, 3rem) 4rem; gap: 4rem; }
   .hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--v12-orange); background: rgba(232,93,47,0.1); padding: 6px 14px; border-radius: 100px; margin-bottom: 1.5rem; }
@@ -71,25 +71,52 @@
   .btn-primary:hover { background: var(--v12-orange); transform: translateY(-1px); }
   .btn-ghost { color: var(--v12-black); font-size: 0.95rem; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; transition: gap 0.2s; }
   .btn-ghost:hover { gap: 12px; }
-  .insole-card { background: var(--v12-dark); border-radius: 32px; padding: 2.5rem 2rem; width: 100%; max-width: 420px; position: relative; overflow: hidden; }
-  .insole-card::before { content: ''; position: absolute; top: -60px; right: -60px; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(232,93,47,0.18) 0%, transparent 70%); pointer-events: none; }
-  .insole-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 1.5rem; }
-  .metric-pill { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 0.75rem 1rem; }
-  .metric-pill .metric-label { font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 4px; }
-  .metric-pill .metric-value { font-size: 1rem; font-weight: 500; color: white; }
-  .metric-pill .metric-value.orange { color: var(--v12-orange); }
-  .status-badge { display: inline-flex; align-items: center; gap: 6px; background: rgba(232,93,47,0.15); border: 1px solid rgba(232,93,47,0.3); border-radius: 100px; padding: 6px 14px; margin-bottom: 1.25rem; }
-  .status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--v12-orange); animation: pulse 2s ease-in-out infinite; }
-  @keyframes pulse { 0%,100%{opacity:1}50%{opacity:0.4} }
-  .status-text { font-size: 0.75rem; color: var(--v12-orange); font-weight: 500; }
- 
+
+  /* SLIDESHOW */
+  .slideshow {
+    position: relative; width: 100%; max-width: 520px;
+    border-radius: 24px; overflow: hidden;
+    background: var(--v12-dark);
+    aspect-ratio: 4/3;
+  }
+  .slide {
+    position: absolute; inset: 0;
+    opacity: 0; transition: opacity 0.7s ease;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .slide.active { opacity: 1; }
+  .slide img {
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
+  .slide-controls {
+    position: absolute; bottom: 1rem; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 10;
+  }
+  .slide-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: rgba(255,255,255,0.35); border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.2s; padding: 0;
+  }
+  .slide-dot.active { background: var(--v12-orange); transform: scale(1.25); }
+  .slide-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(0,0,0,0.45); border: none; color: white;
+    width: 36px; height: 36px; border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; z-index: 10; transition: background 0.2s;
+  }
+  .slide-arrow:hover { background: var(--v12-orange); }
+  .slide-arrow.prev { left: 0.75rem; }
+  .slide-arrow.next { right: 0.75rem; }
+
   /* STATS */
   .stats-banner { background: var(--v12-orange); padding: 4rem clamp(1.5rem, 5vw, 3rem); }
   .stats-inner { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 2rem; }
   .stat { text-align: center; }
   .stat-num { font-family: var(--serif); font-size: 3.2rem; color: white; line-height: 1; display: block; margin-bottom: 0.35rem; }
   .stat-desc { font-size: 0.875rem; color: rgba(255,255,255,0.78); }
- 
+
   /* DARK FEATURES */
   .features-bg { background: var(--v12-dark); }
   .features-bg .section-title { color: white; }
@@ -101,13 +128,13 @@
   .feature-icon svg { width: 22px; height: 22px; stroke: var(--v12-orange); fill: none; stroke-width: 1.8; }
   .feature-cell h3 { font-size: 1rem; font-weight: 500; color: white; margin-bottom: 0.5rem; }
   .feature-cell p { font-size: 0.875rem; line-height: 1.65; color: rgba(255,255,255,0.45); }
- 
+
   /* STEPS */
   .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-top: 4rem; }
   .step-num { font-family: var(--serif); font-size: 4rem; line-height: 1; color: rgba(232,93,47,0.15); margin-bottom: 1rem; display: block; }
   .step h3 { font-size: 1.05rem; font-weight: 500; margin-bottom: 0.5rem; }
   .step p { font-size: 0.9rem; line-height: 1.65; color: var(--v12-mid); }
- 
+
   /* LAYER STACK */
   .layer-stack { display: flex; flex-direction: column; border-radius: 20px; overflow: hidden; margin-top: 2.5rem; }
   .layer-row { display: grid; grid-template-columns: 2.5rem 1fr 1fr; }
@@ -117,28 +144,22 @@
   .layer-name .layer-tag { font-size: 0.68rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--v12-orange); }
   .layer-desc { background: rgba(255,255,255,0.02); padding: 1.2rem 1.5rem; border-bottom: 1px solid rgba(255,255,255,0.04); border-left: 1px solid rgba(255,255,255,0.04); }
   .layer-desc p { font-size: 0.855rem; line-height: 1.6; color: rgba(255,255,255,0.45); }
- 
-  /* TECH SPLIT */
-  .tech-split { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
+
+  /* TECH LIST */
   .tech-list { list-style: none; margin-top: 1.5rem; }
   .tech-list li { display: flex; gap: 1rem; padding: 1.2rem 0; border-bottom: 1px solid rgba(0,0,0,0.07); }
   .tech-list li:last-child { border-bottom: none; }
   .tech-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--v12-orange); flex-shrink: 0; margin-top: 6px; }
   .tech-list li h4 { font-size: 0.95rem; font-weight: 500; margin-bottom: 0.25rem; }
   .tech-list li p { font-size: 0.875rem; color: var(--v12-mid); line-height: 1.6; }
-  .spec-table { width: 100%; border-collapse: collapse; margin-top: 1.5rem; font-size: 0.9rem; }
-  .spec-table tr { border-bottom: 1px solid rgba(0,0,0,0.07); }
-  .spec-table td { padding: 0.9rem 0; }
-  .spec-table td:first-child { color: var(--v12-mid); width: 58%; }
-  .spec-table td:last-child { font-weight: 500; text-align: right; }
- 
+
   /* USE CASES */
   .use-cases { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.75rem; margin-top: 3rem; }
   .use-case-card { background: white; border-radius: 20px; padding: 2rem; border: 1px solid rgba(0,0,0,0.07); }
   .use-case-tag { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--v12-orange); font-weight: 500; margin-bottom: 0.75rem; display: block; }
   .use-case-card h3 { font-family: var(--serif); font-size: 1.3rem; margin-bottom: 0.75rem; line-height: 1.2; }
   .use-case-card p { font-size: 0.875rem; line-height: 1.65; color: var(--v12-mid); }
- 
+
   /* DASHBOARD */
   .dashboard-split { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 3rem; }
   .dashboard-card { border-radius: 20px; padding: 2.5rem 2rem; }
@@ -155,20 +176,31 @@
   .feature-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--v12-orange); flex-shrink: 0; margin-top: 7px; }
   .dashboard-card.individual .feature-list li { color: rgba(255,255,255,0.6); }
   .dashboard-card.org .feature-list li { color: var(--v12-mid); }
- 
+
+  /* APP VISUAL */
+  .app-visual-wrap {
+    margin-top: 4rem; border-radius: 20px; overflow: hidden;
+    background: var(--v12-dark);
+    display: flex; align-items: center; justify-content: center;
+    min-height: 360px;
+  }
+  .app-visual-wrap img {
+    width: 100%; max-height: 520px; object-fit: contain; display: block;
+  }
+
   /* COMPLIANCE */
   .compliance-strip { background: white; border-top: 1px solid rgba(0,0,0,0.07); border-bottom: 1px solid rgba(0,0,0,0.07); padding: 1.75rem clamp(1.5rem, 5vw, 3rem); }
   .compliance-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; gap: 2rem; flex-wrap: wrap; }
   .compliance-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--v12-mid); font-weight: 500; flex-shrink: 0; }
   .compliance-badges { display: flex; gap: 0.75rem; flex-wrap: wrap; }
   .badge { background: var(--v12-cream); border: 1px solid rgba(0,0,0,0.09); border-radius: 8px; padding: 0.4rem 0.9rem; font-size: 0.78rem; font-weight: 500; color: var(--v12-black); }
- 
+
   /* PRINCIPLE CARDS */
   .principle-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
   .principle-card { padding: 1.75rem; background: var(--v12-cream); border-radius: 16px; }
   .principle-card h4 { font-size: 0.95rem; font-weight: 500; margin: 1rem 0 0.5rem; }
   .principle-card p { font-size: 0.875rem; color: var(--v12-mid); line-height: 1.6; }
- 
+
   /* ABOUT */
   .about-hero { background: var(--v12-dark); padding: 6rem clamp(1.5rem, 5vw, 3rem) 5rem; }
   .about-hero-inner { max-width: var(--max-w); margin: 0 auto; }
@@ -179,7 +211,7 @@
   .about-placeholder .placeholder-tag { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--v12-orange); font-weight: 500; margin-bottom: 1rem; display: block; }
   .about-placeholder h3 { font-family: var(--serif); font-size: 1.6rem; margin-bottom: 0.75rem; color: var(--v12-mid); }
   .about-placeholder p { color: var(--v12-mid); font-size: 0.95rem; }
- 
+
   /* CONTACT */
   .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; margin-top: 3rem; }
   .contact-form { display: flex; flex-direction: column; gap: 1rem; }
@@ -196,7 +228,7 @@
   .contact-item-icon svg { width: 18px; height: 18px; stroke: var(--v12-orange); fill: none; stroke-width: 1.8; }
   .contact-item-text h4 { font-size: 0.875rem; font-weight: 500; margin-bottom: 2px; }
   .contact-item-text p { font-size: 0.875rem; color: var(--v12-mid); }
- 
+
   /* FOOTER */
   footer { background: var(--v12-black); color: rgba(255,255,255,0.45); padding: 3rem clamp(1.5rem, 5vw, 3rem); font-size: 0.85rem; }
   footer a { color: var(--v12-orange); text-decoration: none; }
@@ -209,19 +241,19 @@
   .footer-links-col a { color: rgba(255,255,255,0.45); text-decoration: none; font-size: 0.875rem; transition: color 0.2s; }
   .footer-links-col a:hover { color: rgba(255,255,255,0.85); }
   .footer-divider { border: none; border-top: 1px solid rgba(255,255,255,0.07); margin-bottom: 1.5rem; }
- 
+
   .toast { position: fixed; bottom: 2rem; right: 2rem; background: var(--v12-black); color: white; padding: 1rem 1.5rem; border-radius: 14px; font-size: 0.9rem; z-index: 999; transform: translateY(80px); opacity: 0; transition: all 0.35s cubic-bezier(0.34,1.56,0.64,1); pointer-events: none; max-width: 280px; }
   .toast.show { transform: translateY(0); opacity: 1; }
- 
+
   .fade-in { opacity: 0; transform: translateY(24px); animation: fadeUp 0.7s ease forwards; }
   @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
   .delay-1 { animation-delay: 0.1s; }
   .delay-2 { animation-delay: 0.22s; }
   .delay-3 { animation-delay: 0.34s; }
- 
+
   @media (max-width: 768px) {
     .hero { grid-template-columns: 1fr; gap: 3rem; padding-top: 3rem; }
-    .hero-visual { order: -1; }
+    .slideshow { max-width: 100%; }
     .tech-split, .contact-grid, .dashboard-split { grid-template-columns: 1fr; gap: 2.5rem; }
     .layer-row { grid-template-columns: 2rem 1fr; }
     .layer-desc { display: none; }
@@ -233,7 +265,7 @@
 </style>
 </head>
 <body>
- 
+
 <nav>
   <a href="#" class="nav-logo" onclick="showPage('home'); return false;">
     <div class="logo-mark"><svg viewBox="0 0 24 24"><path d="M12 2C8 2 5 5.5 5 8.5c0 4 4 9 7 12 3-3 7-8 7-12C19 5.5 16 2 12 2z"/><circle cx="12" cy="9" r="2.5" fill="rgba(255,255,255,0.7)"/></svg></div>
@@ -249,51 +281,63 @@
   </ul>
   <button class="hamburger" onclick="toggleMenu()" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
- 
+
 <div class="toast" id="toast"></div>
- 
- 
-<!-- ═══ HOME ═══ -->
+
+
+<!-- HOME -->
 <div class="page active" id="page-home">
- 
+
   <section style="padding:0;">
     <div class="hero">
       <div>
         <div class="hero-eyebrow fade-in">In partnership with V12 Footwear</div>
         <h1 class="fade-in delay-1">A boot that <em>feels</em> every step you take.</h1>
-        <p class="hero-sub fade-in delay-2">SmartStep is a removable smart insole designed for V12's existing boot range. Seven engineered layers detect fatigue, slips, trips and falls in real time, alerting workers and managers before incidents escalate.</p>
+        <p class="hero-sub fade-in delay-2">SmartStep is a removable smart insole designed for V12's existing boot range. Seven engineered layers work together to detect fatigue, slips, trips and falls in real time and alert workers and managers before incidents escalate.</p>
         <div class="hero-actions fade-in delay-3">
           <a href="#" class="btn-primary" onclick="showPage('product'); return false;">See how it's built</a>
           <a href="#" class="btn-ghost" onclick="showPage('app'); return false;">Explore the app →</a>
         </div>
       </div>
+
+      <!-- SLIDESHOW replacing the old SVG card -->
       <div class="fade-in delay-2" style="display:flex;justify-content:center;">
-        <div class="insole-card">
-          <div class="status-badge"><div class="status-dot"></div><span class="status-text">Live monitoring active</span></div>
-          <svg viewBox="0 0 260 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:280px;display:block;margin:0 auto 1.25rem;">
-            <defs><linearGradient id="ig" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:#2a2720"/><stop offset="100%" style="stop-color:#1a1814"/></linearGradient></defs>
-            <path d="M30,80 Q25,55 28,36 Q32,12 60,10 Q90,6 120,8 Q155,10 180,12 Q210,14 228,26 Q242,36 240,52 Q238,68 225,76 Q210,86 180,88 Q140,91 100,90 Q65,89 40,86 Z" fill="url(#ig)" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
-            <circle cx="65" cy="28" r="13" fill="rgba(232,93,47,0.3)" stroke="rgba(232,93,47,0.6)" stroke-width="1"/><circle cx="65" cy="28" r="6" fill="rgba(232,93,47,0.75)"/>
-            <circle cx="120" cy="22" r="9" fill="rgba(232,93,47,0.2)" stroke="rgba(232,93,47,0.45)" stroke-width="1"/><circle cx="120" cy="22" r="4" fill="rgba(232,93,47,0.55)"/>
-            <circle cx="175" cy="27" r="11" fill="rgba(232,93,47,0.22)" stroke="rgba(232,93,47,0.42)" stroke-width="1"/><circle cx="175" cy="27" r="5" fill="rgba(232,93,47,0.5)"/>
-            <circle cx="200" cy="56" r="7" fill="rgba(232,93,47,0.15)" stroke="rgba(232,93,47,0.35)" stroke-width="1"/>
-            <circle cx="85" cy="70" r="8" fill="rgba(232,93,47,0.18)" stroke="rgba(232,93,47,0.38)" stroke-width="1"/>
-            <rect x="133" y="52" width="28" height="18" rx="3" fill="rgba(255,255,255,0.07)" stroke="rgba(255,255,255,0.2)" stroke-width="0.8"/>
-            <text x="147" y="64" text-anchor="middle" font-size="5.5" fill="rgba(255,255,255,0.5)" font-family="monospace">IMU</text>
-            <line x1="161" y1="61" x2="200" y2="56" stroke="rgba(232,93,47,0.28)" stroke-width="0.6" stroke-dasharray="3,2"/>
-            <line x1="133" y1="59" x2="85" y2="70" stroke="rgba(232,93,47,0.28)" stroke-width="0.6" stroke-dasharray="3,2"/>
-          </svg>
-          <div class="insole-metrics">
-            <div class="metric-pill"><div class="metric-label">Gait score</div><div class="metric-value orange">94 / 100</div></div>
-            <div class="metric-pill"><div class="metric-label">Slips, trips and falls</div><div class="metric-value">0 today</div></div>
-            <div class="metric-pill"><div class="metric-label">Temperature</div><div class="metric-value">34.2 °C</div></div>
-            <div class="metric-pill"><div class="metric-label">Shift time</div><div class="metric-value orange">6h 22m</div></div>
+        <div class="slideshow" id="heroSlideshow">
+          <!--
+            TO ADD YOUR IMAGES:
+            Replace each src="images/visual-X.jpg" with your actual GitHub raw image URLs.
+            Example: src="https://raw.githubusercontent.com/muraliraddd/v12-smartstep/main/images/visual1.jpg"
+            The filenames below are placeholders — update them to match what's in your repo.
+          -->
+          <div class="slide active">
+            <img src="images/visual1.jpg" alt="SmartStep product visual 1" onerror="this.parentElement.style.background='#2a2720';this.style.display='none'">
+          </div>
+          <div class="slide">
+            <img src="images/visual2.jpg" alt="SmartStep product visual 2" onerror="this.parentElement.style.background='#2a2720';this.style.display='none'">
+          </div>
+          <div class="slide">
+            <img src="images/visual3.jpg" alt="SmartStep product visual 3" onerror="this.parentElement.style.background='#2a2720';this.style.display='none'">
+          </div>
+          <div class="slide">
+            <img src="images/visual4.jpg" alt="SmartStep product visual 4" onerror="this.parentElement.style.background='#2a2720';this.style.display='none'">
+          </div>
+          <div class="slide">
+            <img src="images/visual5.jpg" alt="SmartStep product visual 5" onerror="this.parentElement.style.background='#2a2720';this.style.display='none'">
+          </div>
+          <button class="slide-arrow prev" onclick="moveSlide(-1)" aria-label="Previous">&#8592;</button>
+          <button class="slide-arrow next" onclick="moveSlide(1)" aria-label="Next">&#8594;</button>
+          <div class="slide-controls" id="slideDots">
+            <button class="slide-dot active" onclick="goToSlide(0)"></button>
+            <button class="slide-dot" onclick="goToSlide(1)"></button>
+            <button class="slide-dot" onclick="goToSlide(2)"></button>
+            <button class="slide-dot" onclick="goToSlide(3)"></button>
+            <button class="slide-dot" onclick="goToSlide(4)"></button>
           </div>
         </div>
       </div>
     </div>
   </section>
- 
+
   <div class="stats-banner">
     <div class="stats-inner">
       <div class="stat"><span class="stat-num">680k</span><div class="stat-desc">Non-fatal workplace injuries annually in the UK (HSE 2023)</div></div>
@@ -302,32 +346,32 @@
       <div class="stat"><span class="stat-num">&lt;10s</span><div class="stat-desc">Emergency contact alert latency after a confirmed fall</div></div>
     </div>
   </div>
- 
+
   <section>
     <div class="section-inner">
       <span class="section-tag">Designed for industry</span>
-      <h2 class="section-title">Built for construction sites and factory floors — not labs.</h2>
+      <h2 class="section-title">Built for construction sites and factory floors, not labs.</h2>
       <p class="section-body">Every design decision in SmartStep reflects real deployment constraints: older ruggedised Android devices, gloved hands, loud environments, and workers who shouldn't need a manual to stay safe.</p>
       <div class="use-cases">
         <div class="use-case-card">
           <span class="use-case-tag">Construction</span>
           <h3>Lone workers on site after hours</h3>
-          <p>A confirmed slip or fall triggers an immediate GPS-located emergency alert to designated contacts. The V12 brief's oil rig night-time slip scenario — a lone worker with no way to call for help — is the product's north star.</p>
+          <p>A confirmed slip or fall triggers an immediate GPS-located emergency alert to designated contacts. The V12 brief's oil rig night-time slip scenario, a lone worker with no way to call for help, is the product's north star.</p>
         </div>
         <div class="use-case-card">
           <span class="use-case-tag">Manufacturing</span>
           <h3>Fatigue accumulation across a 12-hour shift</h3>
-          <p>Gait asymmetry, COM displacement, and Minimum Toe Clearance all degrade before a single incident occurs. SmartStep flags the drift early — giving H&S managers a window to intervene before the risk becomes a statistic.</p>
+          <p>Gait asymmetry and balance degradation both build up well before a single incident occurs. SmartStep flags the drift early, giving H&S managers a window to intervene before the risk becomes a statistic.</p>
         </div>
         <div class="use-case-card">
-          <span class="use-case-tag">Underground & tunnelling</span>
+          <span class="use-case-tag">Underground &amp; tunnelling</span>
           <h3>No signal, no gaps in the safety record</h3>
-          <p>When the app detects lost connectivity, it commands the MCU to cache all incoming sensor data locally. The moment the connection resumes, the session is compiled and synced — preserving a complete RIDDOR-compliant record.</p>
+          <p>When the app detects lost connectivity it switches to local storage mode. The moment the connection resumes, the full session is compiled and synced, preserving a complete incident record with no gaps.</p>
         </div>
       </div>
     </div>
   </section>
- 
+
   <div class="compliance-strip">
     <div class="compliance-inner">
       <span class="compliance-label">Aligned with</span>
@@ -339,35 +383,35 @@
       </div>
     </div>
   </div>
- 
+
   <section style="background:white;">
     <div class="section-inner">
       <span class="section-tag">How it works</span>
       <h2 class="section-title">Seven layers. One insole. Unlimited shifts.</h2>
-      <p class="section-body">SmartStep is removable and fits all V12 boot models. No retooling, no replacement boots, and no per-user calibration — V12's pre-loaded sole geometry handles that.</p>
+      <p class="section-body">SmartStep is removable and fits all V12 boot models. No retooling, no replacement boots, and no per-user calibration. V12's pre-loaded sole geometry handles that.</p>
       <div class="steps">
-        <div class="step"><span class="step-num">01</span><h3>Sense</h3><p>The FSR pressure matrix and 6-axis IMU capture plantar load and full kinematic data at up to 100 Hz. Micro-thermistors and humidity sensors monitor foot temperature and moisture across the full shift.</p></div>
-        <div class="step"><span class="step-num">02</span><h3>Process</h3><p>The onboard MCU fuses all sensor data to compute gait metrics and classify accidents at the edge — before anything is sent to the phone. This keeps BLE bandwidth low and battery life long.</p></div>
-        <div class="step"><span class="step-num">03</span><h3>Alert</h3><p>A haptic buzzer above the metatarsal fires within 2 seconds of a detected threat. It's the physical last resort — a warning that reaches the worker even when audio and visual cues can't.</p></div>
-        <div class="step"><span class="step-num">04</span><h3>Report</h3><p>At shift end the app compiles gait data, incident coordinates, and kinematic precursor metrics into a RIDDOR-compliant payload and syncs to Firestore — ready for H&S root cause analysis.</p></div>
+        <div class="step"><span class="step-num">01</span><h3>Sense</h3><p>Pressure sensors and a motion tracker capture load and movement data during every footstrike. Temperature and moisture sensors keep an eye on conditions throughout the full shift.</p></div>
+        <div class="step"><span class="step-num">02</span><h3>Process</h3><p>The insole's onboard chip analyses all incoming data and identifies gait anomalies and safety events before anything is sent to the phone. This keeps the connection lightweight and the battery lasting longer.</p></div>
+        <div class="step"><span class="step-num">03</span><h3>Alert</h3><p>A vibrating buzzer in the insole fires within seconds of a detected threat. It's the physical last resort, a warning that reaches the worker even when audio and visual cues can't.</p></div>
+        <div class="step"><span class="step-num">04</span><h3>Report</h3><p>At shift end the app compiles gait data, incident locations, and movement context into a legally compliant record and syncs it to the cloud, ready for the H&S team to review.</p></div>
       </div>
     </div>
   </section>
- 
+
 </div>
- 
- 
-<!-- ═══ THE INSOLE ═══ -->
+
+
+<!-- THE INSOLE -->
 <div class="page" id="page-product">
- 
+
   <section style="padding-top:5rem;">
     <div class="section-inner">
       <span class="section-tag">Physical design</span>
       <h1 class="section-title">Seven layers, engineered from the sole up.</h1>
-      <p class="section-body">SmartStep integrates into V12's existing Bison IGS VR600.01 platform. Each layer was selected or upgraded to serve both comfort and safety-critical sensing — and every component is removable for maintenance.</p>
+      <p class="section-body">SmartStep integrates into V12's existing Bison boot platform. Each layer was selected or upgraded to serve both comfort and safety sensing, and every component can be removed for maintenance and replacement.</p>
     </div>
   </section>
- 
+
   <section style="padding-top:1rem; background:var(--v12-dark);">
     <div class="section-inner">
       <span class="section-tag" style="color:var(--v12-orange);">Layer breakdown</span>
@@ -375,175 +419,163 @@
       <div class="layer-stack">
         <div class="layer-row">
           <div class="layer-num">1</div>
-          <div class="layer-name"><div class="layer-tag">Top surface</div><h4>Moisture-wicking & absorption layer</h4></div>
-          <div class="layer-desc"><p>High-density self-regulating absorption pads cover the inner lining. Waterproofs the electronics beneath, regulates temperature, and reduces bacterial and fungal build-up during prolonged wear.</p></div>
+          <div class="layer-name"><div class="layer-tag">Top surface</div><h4>Moisture-wicking and absorption layer</h4></div>
+          <div class="layer-desc"><p>High-density absorption pads line the inner surface. They protect the electronics below from moisture, regulate temperature during long shifts, and reduce the build-up of bacteria that comes with prolonged wear.</p></div>
         </div>
         <div class="layer-row">
           <div class="layer-num">2</div>
-          <div class="layer-name"><div class="layer-tag">Sensing</div><h4>Biocompatible pressure matrix</h4></div>
-          <div class="layer-desc"><p>High-resolution FSR array placed directly beneath the moisture layer. Maps full plantar load distribution at 60–120 FPS. Flexible, lightweight polymer construction ensures biocompatibility during prolonged skin contact.</p></div>
+          <div class="layer-name"><div class="layer-tag">Sensing</div><h4>Pressure matrix</h4></div>
+          <div class="layer-desc"><p>A flexible grid of pressure sensors sits directly beneath the moisture layer, mapping how load is distributed across the foot with every step. The material is safe for long-term skin contact and light enough that you won't notice it's there.</p></div>
         </div>
         <div class="layer-row">
           <div class="layer-num">3</div>
-          <div class="layer-name"><div class="layer-tag">Intelligence</div><h4>Core electronics architecture</h4></div>
-          <div class="layer-desc"><p>6-axis IMU, GPS, BLE radio, MCU, micro-thermistors and humidity sensors — miniaturised onto an IC and encapsulated in flexible potting compound for shock protection. Arch-mounted for comfort. Removable via pogo pin connectors.</p></div>
+          <div class="layer-name"><div class="layer-tag">Intelligence</div><h4>Core electronics</h4></div>
+          <div class="layer-desc"><p>Motion sensors, a location chip, wireless radio, and a processor are all packed into a single sealed unit and positioned under the arch where they cause the least discomfort. The unit clips out via magnetic connectors for easy removal.</p></div>
         </div>
         <div class="layer-row">
           <div class="layer-num">4</div>
-          <div class="layer-name"><div class="layer-tag">Protection</div><h4>Non-metallic composite midsole</h4></div>
-          <div class="layer-desc"><p>Shields feet and the insole layers from sharp object penetration. Non-metallic by design — standard steel midsoles would interfere electromagnetically with the onboard sensors and cause packet loss from EMI.</p></div>
+          <div class="layer-name"><div class="layer-tag">Protection</div><h4>Composite midsole</h4></div>
+          <div class="layer-desc"><p>A non-metal plate between the insole and the outsole guards against sharp objects on the ground. The non-metal construction is intentional: a steel midsole would interfere with the wireless components above it.</p></div>
         </div>
         <div class="layer-row">
           <div class="layer-num">5</div>
-          <div class="layer-name"><div class="layer-tag">Warning</div><h4>Haptic buzzer module</h4></div>
-          <div class="layer-desc"><p>Positioned above the metatarsal for maximum sensitivity and minimum comfort impact. Fires within 2 seconds of a confirmed gait-based injury threat — the physical failsafe when audio and visual alerts can't reach the worker.</p></div>
+          <div class="layer-name"><div class="layer-tag">Warning</div><h4>Vibration alert module</h4></div>
+          <div class="layer-desc"><p>A small vibrating unit sits above the ball of the foot. When the system detects a genuine threat, it buzzes the boot within seconds. On a loud factory floor where you can't hear your phone, this physical alert is often the only one that gets through.</p></div>
         </div>
         <div class="layer-row">
           <div class="layer-num">6</div>
-          <div class="layer-name"><div class="layer-tag">Power</div><h4>Li-Ion battery & cable routing</h4></div>
-          <div class="layer-desc"><p>Rechargeable cell housed in the water-resistant tongue, accessible behind the V12 logo zip. Pre-existing bellows tongue routes cabling to electronics without structural modification. Sized for a full 12-hour shift.</p></div>
+          <div class="layer-name"><div class="layer-tag">Power</div><h4>Battery and cabling</h4></div>
+          <div class="layer-desc"><p>A rechargeable battery lives in the water-resistant tongue of the boot, tucked behind the V12 logo zip for easy access. Cabling runs from the battery to the electronics through an existing channel in the tongue, so no structural changes to the boot are needed.</p></div>
         </div>
         <div class="layer-row">
           <div class="layer-num">7</div>
-          <div class="layer-name"><div class="layer-tag">Outsole</div><h4>IGS tread — geometrically optimised</h4></div>
-          <div class="layer-desc"><p>V12's proprietary IGS sole re-evaluated for tread edge geometry and material to maximise grip in adverse conditions. Weight additions minimised; shock-resistance classifications preserved. Pre-loaded geometry eliminates per-user calibration.</p></div>
+          <div class="layer-name"><div class="layer-tag">Outsole</div><h4>IGS tread geometry</h4></div>
+          <div class="layer-desc"><p>V12's existing IGS sole has been re-evaluated for grip in wet and contaminated conditions. The tread shape and material have been refined to improve traction without adding noticeable weight or altering any of the boot's existing safety certifications.</p></div>
         </div>
       </div>
     </div>
   </section>
- 
+
   <section>
     <div class="section-inner">
-      <div class="tech-split">
-        <div>
-          <span class="section-tag">Electronics</span>
-          <h2 style="font-family:var(--serif); font-size:2rem; letter-spacing:-0.02em; margin-bottom:0.5rem;">What's inside the IC</h2>
-          <ul class="tech-list">
-            <li><div class="tech-dot"></div><div><h4>6-axis IMU</h4><p>3-axis accelerometer + gyroscope. Captures full kinematic data per stride. ZUPT correction eliminates drift across a 12-hour shift.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>FSR pressure matrix</h4><p>Biocompatible array delivering plantar load heatmaps at 60–120 FPS. .</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>GPS module</h4><p>Triangulates user location for geofencing and incident coordinate logging. GPS writes directly to Firestore, independent of BLE telemetry.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>Micro-thermistors & humidity sensors</h4><p>Monitor foot and electronics temperature continuously. App alerts within 5 seconds when temperature exceeds 43 °C — protecting both the worker and the device.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>BLE 5.0 radio</h4><p>Throttled to 0.1–0.2 Hz during normal operation to preserve battery. Escalates immediately on incident detection, pushing a 10-second kinematic snapshot to the app.</p></div></li>
-          </ul>
-        </div>
-        <div>
-          <span class="section-tag">Specifications</span>
-          <h2 style="font-family:var(--serif); font-size:2rem; letter-spacing:-0.02em; margin-bottom:0.5rem;">At a glance</h2>
-          <table class="spec-table">
-            <tr><td>Compatible boot range</td><td>All V12 models</td></tr>
-            <tr><td>Calibration required</td><td>None</td></tr>
-            <tr><td>Sampling rate</td><td>Up to 100 Hz</td></tr>
-            <tr><td>Pressure frame rate</td><td>60–120 FPS</td></tr>
-            <tr><td>BLE cadence (normal)</td><td>0.1–0.2 Hz</td></tr>
-            <tr><td>BLE cadence (incident alert)</td><td>Immediate burst</td></tr>
-            <tr><td>Haptic alert latency</td><td>&lt; 2 seconds</td></tr>
-            <tr><td>Emergency alert latency</td><td>&lt; 10 seconds</td></tr>
-            <tr><td>Shift battery life</td><td>12 hours</td></tr>
-            <tr><td>Local data buffer</td><td>Full 12-hour shift</td></tr>
-            <tr><td>Temperature alert threshold</td><td>43 °C</td></tr>
-            <tr><td>Insole-seated notification</td><td>&lt; 5 seconds</td></tr>
-          </table>
-        </div>
-      </div>
+      <span class="section-tag">Electronics</span>
+      <h2 class="section-title" style="font-size:2rem;">What's inside</h2>
+      <p class="section-body">The sealed electronics unit houses everything the insole needs to sense, process, and communicate, all in a package small enough to sit unnoticed beneath the arch of the foot.</p>
+      <ul class="tech-list" style="max-width:680px; margin-top:2rem;">
+        <li><div class="tech-dot"></div><div><h4>6-axis motion sensor</h4><p>Tracks acceleration and rotation across all three axes on every stride. A drift correction algorithm keeps the readings accurate across a full 12-hour shift.</p></div></li>
+        <li><div class="tech-dot"></div><div><h4>Pressure sensing array</h4><p>Maps how weight is distributed across the foot in real time. The readings are clinically benchmarked to ensure the gait insights shown in the app are medically meaningful.</p></div></li>
+        <li><div class="tech-dot"></div><div><h4>GPS chip</h4><p>Tracks the worker's location continuously for geofencing and for logging the precise coordinates of any incident. Location data is sent directly to the cloud, separately from the movement data.</p></div></li>
+        <li><div class="tech-dot"></div><div><h4>Temperature and humidity sensors</h4><p>Monitor conditions inside the boot throughout the shift. If the temperature exceeds a safe threshold, the app alerts the worker within seconds, protecting both the wearer and the electronics.</p></div></li>
+        <li><div class="tech-dot"></div><div><h4>Bluetooth radio</h4><p>Transmits data to the paired phone at a low rate during normal use to preserve battery life. When a safety event is detected, it switches to a rapid burst to get the data across immediately.</p></div></li>
+      </ul>
     </div>
   </section>
 </div>
- 
- 
-<!-- ═══ THE APP ═══ -->
+
+
+<!-- THE APP -->
 <div class="page" id="page-app">
- 
+
   <section style="padding-top:5rem;">
     <div class="section-inner">
       <span class="section-tag">Companion app</span>
       <h1 class="section-title">Two dashboards. One platform. Built for the real world.</h1>
-      <p class="section-body">SmartStep's Flutter app serves individual workers and H&S managers through separate role-based interfaces — on iOS and Android from a single codebase, with no platform-specific workarounds required.</p>
+      <p class="section-body">SmartStep's app serves individual workers and H&S managers through separate role-based interfaces, on iOS and Android from a single codebase with no platform-specific workarounds required.</p>
     </div>
   </section>
- 
+
   <section style="padding-top:1rem;">
     <div class="section-inner">
       <div class="dashboard-split">
         <div class="dashboard-card individual">
           <span class="card-tag">Individual worker</span>
           <h3>Your safety, in your pocket.</h3>
-          <p class="intro">Workers receive a personal real-time view of gait health and shift data. Login and insole pairing in under 3 minutes — no training required.</p>
+          <p class="intro">Workers get a personal real-time view of their gait health and shift data. Login and insole pairing in under 3 minutes, no training required.</p>
           <ul class="feature-list">
-            <li>Real-time plantar pressure heatmap at 60–120 FPS</li>
-            <li>L/R load distribution, pronation analytics, walking asymmetry</li>
-            <li>Walking speed, cadence, double support time (±2% accuracy)</li>
+            <li>Real-time plantar pressure heatmap</li>
+            <li>Left/right load distribution, pronation and walking asymmetry</li>
+            <li>Walking speed, cadence and double support time</li>
             <li>Gait asymmetry and fatigue trend across the full shift</li>
-            <li>Temperature alert if foot or electronics exceed 43 °C</li>
-            <li>Haptic + visual alert within 2 s of a detected injury threat</li>
-            <li>Push notification within 5 s of insole successfully seated</li>
-            <li>Battery health indicator persistent across all screens</li>
-            <li>GPS-based geofenced high-risk zone overlay</li>
+            <li>Temperature alert if foot or electronics exceed a safe threshold</li>
+            <li>Vibration and visual alert within seconds of a detected threat</li>
+            <li>Push notification when the insole is successfully connected</li>
+            <li>Battery indicator visible from every screen</li>
+            <li>GPS-based high-risk zone overlay on the personal map</li>
           </ul>
         </div>
         <div class="dashboard-card org">
           <span class="card-tag">H&S manager / organisational</span>
           <h3>Your team, visible at a glance.</h3>
-          <p class="intro">Managers see a live workforce overview updating within 1 second of any Firestore write — with the tools to intervene before an incident escalates.</p>
+          <p class="intro">Managers see a live workforce overview that updates within a second of any new data, with everything they need to intervene before an incident escalates.</p>
           <ul class="feature-list">
-            <li>Live employee session tiles: gait score, name, role</li>
+            <li>Live employee session tiles showing gait score, name and role</li>
             <li>Real-time GPS map with employee location pins</li>
-            <li>Geofenced high-risk overlays, auto-populated from incident GPS</li>
-            <li>Full RIDDOR-compliant incident log with kinematic precursor suite</li>
-            <li>Incident heatmap, bilateral MTC chart, stride asymmetry chart</li>
+            <li>High-risk area overlays, automatically populated from incident data</li>
+            <li>Full legally compliant incident log with movement precursor data</li>
+            <li>Incident heatmap, toe clearance chart and stride asymmetry chart</li>
             <li>Exportable session histories and incident reports</li>
-            <li>Paginated employee network view with full session histories</li>
-            <li>Seamless end-of-shift cloud sync for root cause analysis</li>
+            <li>Employee network view with paginated session histories</li>
+            <li>End-of-shift cloud sync ready for root cause analysis</li>
           </ul>
         </div>
       </div>
+
+      <!-- APP VISUAL -->
+      <!--
+        Replace src="images/app-visual.jpg" with the actual filename from your GitHub repo.
+        Example: src="https://raw.githubusercontent.com/muraliraddd/v12-smartstep/main/images/app-visual.png"
+      -->
+      <div class="app-visual-wrap">
+        <img src="images/app-visual.jpg" alt="SmartStep app screens" onerror="this.parentElement.innerHTML='<p style=\'color:rgba(255,255,255,0.3);padding:2rem;text-align:center;\'>App visual — update src to your image path</p>'">
+      </div>
     </div>
   </section>
- 
+
   <section style="background:white;">
     <div class="section-inner">
       <span class="section-tag">Design principles</span>
       <h2 class="section-title">Designed around the worker, not the engineer.</h2>
-      <p class="section-body">Every UI decision was validated against real-world deployment constraints — not ideal conditions. The app must work on older ruggedised Androids, in loud environments, with gloved hands, and for workers who've never used a safety app before.</p>
+      <p class="section-body">The app has to work in conditions where most consumer apps would fail. Bright sunlight on a screen. Thick gloves on a touchscreen. Loud machinery drowning out any notification sound. Older phones that haven't been updated in years. Every decision in the design was made with those realities in mind.</p>
       <div class="principle-grid">
         <div class="principle-card">
           <div class="feature-icon"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:var(--v12-orange);fill:none;stroke-width:1.8;"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div>
-          <h4>Small-screen first</h4>
-          <p>All tap targets ≥ 48×48 dp, sized for gloved hands on 360 dp-width devices. 78% of construction workers use personal phones — many carry older, smaller-screen Androids.</p>
+          <h4>Works on any phone</h4>
+          <p>All buttons and tap targets are sized for use with work gloves. The layout fits smaller and older screens without anything getting cut off or becoming hard to press.</p>
         </div>
         <div class="principle-card">
           <div class="feature-icon"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:var(--v12-orange);fill:none;stroke-width:1.8;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg></div>
-          <h4>High contrast & haptic-first</h4>
-          <p>All text/background contrast ratios exceed WCAG AA (>4.5:1). Haptic alerts fire within 2 seconds — the physical fallback when audio and visual cues can't reach the worker on a noisy factory floor.</p>
+          <h4>Readable in any light</h4>
+          <p>Text and background colours meet accessibility contrast standards. When the vibration alert fires, it acts as a physical backup for situations where the screen or audio simply can't get the worker's attention.</p>
         </div>
         <div class="principle-card">
           <div class="feature-icon"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:var(--v12-orange);fill:none;stroke-width:1.8;"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
-          <h4>Sub-100ms navigation</h4>
-          <p>All page transitions complete within 100 ms. When a worker urgently navigates to pressure metrics or incident data in a safety-critical situation, front-end buffering is a direct risk — not an annoyance.</p>
+          <h4>Instant response</h4>
+          <p>Every screen loads immediately. If a worker needs to check their pressure readings or pull up an incident record in a hurry, a slow-loading page is not just annoying, it is a safety problem.</p>
         </div>
         <div class="principle-card">
           <div class="feature-icon"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:var(--v12-orange);fill:none;stroke-width:1.8;"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-          <h4>GDPR & RIDDOR compliant</h4>
-          <p>Sign-up includes a GDPR consent notice. Incident metadata — timestamp, GPS coordinates, mechanism — is captured in a format exportable to the HSE within the mandatory 10-day reporting window.</p>
+          <h4>Legally compliant by default</h4>
+          <p>Privacy consent is built into the sign-up flow. When an incident is logged, the app automatically captures the time, location and cause in a format that can be reported to the HSE within the required timeframe.</p>
         </div>
         <div class="principle-card">
           <div class="feature-icon"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:var(--v12-orange);fill:none;stroke-width:1.8;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div>
-          <h4>3-minute onboarding</h4>
-          <p>Plain-English labels and minimal required inputs. A representative non-technical user must complete first login and insole pairing within 3 minutes without assistance — this is a hard acceptance criterion, not an aspiration.</p>
+          <h4>Up and running in 3 minutes</h4>
+          <p>Plain language throughout, minimal steps, and no technical knowledge required. A first-time user with no experience of safety apps should be able to log in and pair their insole before their shift starts.</p>
         </div>
         <div class="principle-card">
           <div class="feature-icon"><svg viewBox="0 0 24 24" style="width:22px;height:22px;stroke:var(--v12-orange);fill:none;stroke-width:1.8;"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
-          <h4>Offline-resilient</h4>
-          <p>On connectivity loss the insole caches all sensor data locally via Hive. On reconnection the app immediately compiles and syncs the full session — no gaps in the worker's safety history, even underground.</p>
+          <h4>Works without signal</h4>
+          <p>If the phone loses connection, the insole keeps recording and stores everything locally. When the connection comes back, the full session syncs automatically, so there are never any gaps in the safety record.</p>
         </div>
       </div>
     </div>
   </section>
 </div>
- 
- 
-<!-- ═══ SAFETY SCIENCE ═══ -->
+
+
+<!-- SAFETY SCIENCE -->
 <div class="page" id="page-safety">
- 
+
   <section style="padding-top:5rem; background:var(--v12-dark);">
     <div class="section-inner">
       <span class="section-tag" style="color:var(--v12-orange);">Detection science</span>
@@ -551,7 +583,7 @@
       <p class="section-body" style="color:rgba(255,255,255,0.5); max-width:680px;">SmartStep's detection suite draws on the CDC/NIOSH Lockhart report, the MDPI 2024 systematic review, and Fehr et al. 2024 (Nature). Each metric targets a distinct failure mode in the gait cycle.</p>
     </div>
   </section>
- 
+
   <section style="padding-top:0; background:var(--v12-dark);">
     <div class="section-inner">
       <div class="features-grid">
@@ -563,88 +595,88 @@
         <div class="feature-cell">
           <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M8 12h8M12 8v8"/></svg></div>
           <h3>RCOF — Required Coefficient of Friction</h3>
-          <p>Quantifies the friction demand placed on the floor surface per stride. Threshold exceedances predict slip onset and enable proactive surface risk flagging — useful for identifying hazardous floor zones before they cause an incident.</p>
+          <p>Quantifies the friction demand placed on the floor surface per stride. Threshold exceedances predict slip onset and enable proactive surface risk flagging, useful for identifying hazardous floor zones before they cause an incident.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
           <h3>MTC — Minimum Toe Clearance</h3>
-          <p>The trip-specific metric. MTC narrows progressively with fatigue — making it the earliest detectable indicator of trip risk across a long shift. Validated by Fehr et al. 2024 (Nature) and the MDPI 2024 systematic review.</p>
+          <p>The trip-specific metric. MTC narrows progressively with fatigue, making it the earliest detectable indicator of trip risk across a long shift. Validated by Fehr et al. 2024 (Nature) and the MDPI 2024 systematic review.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div>
           <h3>ZUPT — Zero Velocity Update</h3>
-          <p>Corrects IMU drift during the stance phase, enabling accurate stride length and cadence estimates across a 12-hour shift. Without ZUPT, position-dead-reckoning errors accumulate and corrupt fatigue metrics over time.</p>
+          <p>Corrects sensor drift during the stance phase, enabling accurate stride length and cadence estimates across a 12-hour shift. Without this correction, errors accumulate over time and corrupt fatigue metrics.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon"><svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
           <h3>SDI / SDII — Slip Distance</h3>
-          <p>Quantifies forward and lateral foot displacement post-heel contact. Distinguishes recoverable stumbles from genuine fall-risk events — critical for maintaining worker trust by minimising false positive alerts.</p>
+          <p>Quantifies forward and lateral foot displacement after heel contact. Distinguishes recoverable stumbles from genuine fall-risk events, critical for maintaining worker trust by minimising false positive alerts.</p>
         </div>
         <div class="feature-cell">
           <div class="feature-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div>
           <h3>COM — Centre of Mass displacement</h3>
-          <p>Tracks whole-body balance degradation over a shift. An early-warning signal for fall risk that precedes any discrete event — giving H&S managers a window to intervene proactively before a threshold is breached.</p>
+          <p>Tracks whole-body balance degradation over a shift. An early-warning signal for fall risk that precedes any discrete event, giving H&S managers a window to intervene proactively before a threshold is breached.</p>
         </div>
       </div>
     </div>
   </section>
- 
+
   <section>
     <div class="section-inner">
       <span class="section-tag">Incident response</span>
-      <h2 class="section-title">From detection to documented — automatically.</h2>
-      <p class="section-body">RIDDOR requires employers to report specified injuries to the HSE within 10 days. SmartStep generates the full evidentiary record the moment an event occurs — timestamped, GPS-precise, and immutable from the client.</p>
+      <h2 class="section-title">From detection to documented, automatically.</h2>
+      <p class="section-body">RIDDOR requires employers to report specified injuries to the HSE within 10 days. SmartStep generates the full evidentiary record the moment an event occurs, timestamped, GPS-precise, and immutable from the client.</p>
       <div class="tech-split" style="margin-top:3rem;">
         <div>
-          <h3 style="font-family:var(--serif); font-size:1.5rem; margin-bottom:1.25rem;">On incident detection</h3>
+          <h3 style="font-family:var(--serif); font-size:1.5rem; margin-bottom:1.25rem;">On STF detection</h3>
           <ul class="tech-list">
-            <li><div class="tech-dot"></div><div><h4>Haptic alert fires (&lt; 2 s)</h4><p>Buzzer module above the metatarsal triggers on both insole and smartphone — the physical failsafe in high-noise environments where audio and visual cues fail.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>10-second kinematic snapshot captured</h4><p>MCU accumulates the surrounding gait data — HCV, COM, MTC, bilateral asymmetry — and pushes a structured burst to the app via BLE at 100 Hz transfer rate.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>Emergency contacts alerted (&lt; 10 s)</h4><p>Designated contacts receive a GPS-located alert automatically. This directly addresses the HSE's 35 fatal falls from height in 2024/25 — many involving lone workers with no way to call for help.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>RIDDOR-compliant record created</h4><p>Firestore entry written with server-side timestamp, GPS coordinates, mechanism classification, and full kinematic precursor suite — immutable from the client and exportable within the 10-day reporting window.</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>Vibration alert fires within 2 seconds</h4><p>The buzzer module triggers on both the insole and the smartphone simultaneously, the physical failsafe in high-noise environments where audio and visual cues can't get through.</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>Movement snapshot captured</h4><p>The insole's chip captures the surrounding gait data and pushes a structured burst to the app, giving the incident record its full biomechanical context.</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>Emergency contacts alerted within 10 seconds</h4><p>Designated contacts receive an automatic GPS-located alert. This directly addresses the HSE's 35 fatal falls from height in 2024/25, many involving lone workers with no way to call for help.</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>Legally compliant record created</h4><p>An incident entry is written with a server-side timestamp, GPS coordinates, cause classification, and full movement precursor data. It cannot be altered from the device and can be exported within the 10-day reporting window.</p></div></li>
           </ul>
         </div>
         <div>
           <h3 style="font-family:var(--serif); font-size:1.5rem; margin-bottom:1.25rem;">What the manager sees</h3>
           <ul class="tech-list">
-            <li><div class="tech-dot"></div><div><h4>HCV / COM chart</h4><p>Time-series view of heel contact velocity and centre of mass displacement across the incident window — revealing the biomechanical build-up before the event occurred.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>Bilateral MTC chart</h4><p>Left-right toe clearance comparison across the preceding strides. Progressive narrowing on one side is a reliable trip precursor and supports root cause analysis.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>Stride asymmetry chart</h4><p>Gait symmetry score across the shift — revealing whether the incident followed a period of progressive fatigue accumulation that could have been intercepted.</p></div></li>
-            <li><div class="tech-dot"></div><div><h4>Incident heatmap & GPS coordinates</h4><p>Precise incident location plotted on the organisational map. Repeated incidents in the same zone automatically elevate it as a geofenced high-risk area for all workers on site.</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>Heel velocity and balance chart</h4><p>A time-series view of movement in the window around the incident, showing the biomechanical build-up before the event occurred.</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>Bilateral toe clearance chart</h4><p>A left-right comparison across the preceding strides. Progressive narrowing on one side is a reliable trip precursor and supports root cause analysis.</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>Stride asymmetry chart</h4><p>Gait symmetry score across the shift, revealing whether the incident followed a period of progressive fatigue accumulation that could have been intercepted earlier.</p></div></li>
+            <li><div class="tech-dot"></div><div><h4>Incident heatmap and GPS coordinates</h4><p>Precise incident location plotted on the organisational map. Repeated incidents in the same zone automatically flag it as a high-risk area for all workers on site.</p></div></li>
           </ul>
         </div>
       </div>
     </div>
   </section>
 </div>
- 
- 
-<!-- ═══ ABOUT ═══ -->
+
+
+<!-- ABOUT -->
 <div class="page" id="page-about">
   <div class="about-hero">
     <div class="about-hero-inner">
       <span class="section-tag">About us</span>
       <h1>Safety technology, built from the ground up.</h1>
-      <p>Developed in collaboration with V12 Footwear as part of a Graduate Business Development Project — bringing academic rigour and commercial focus together.</p>
+      <p>Developed in collaboration with V12 Footwear as part of a Graduate Business Development Project, bringing academic rigour and commercial focus together.</p>
     </div>
   </div>
   <div class="about-content">
     <div class="about-placeholder">
       <span class="placeholder-tag">Content coming soon</span>
-      <h3>About us — placeholder</h3>
+      <h3>About us</h3>
       <p>This section is reserved for team bios, the V12 partnership story, academic context, and project background.</p>
     </div>
   </div>
 </div>
- 
- 
-<!-- ═══ CONTACT ═══ -->
+
+
+<!-- CONTACT -->
 <div class="page" id="page-contact">
   <section style="padding-top:5rem;">
     <div class="section-inner">
       <span class="section-tag">Get in touch</span>
       <h1 class="section-title">Interested in SmartStep?</h1>
-      <p class="section-body">Whether you're a safety manager, a distributor, or a researcher — we'd like to hear from you.</p>
+      <p class="section-body">Whether you're a safety manager, a distributor, or a researcher, we'd like to hear from you.</p>
       <div class="contact-grid">
         <form class="contact-form" onsubmit="handleForm(event)">
           <div class="form-group"><label>Full name</label><input type="text" placeholder="Jane Smith" required></div>
@@ -686,8 +718,8 @@
     </div>
   </section>
 </div>
- 
- 
+
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-inner">
@@ -720,11 +752,12 @@
       </div>
     </div>
     <hr class="footer-divider">
-    <p style="text-align:center;">© 2026 V12 SmartStep — Group Business and Design Project. Built in collaboration with <a href="https://www.v12footwear.com" target="_blank" rel="noopener">V12 Footwear</a>.</p>
+    <p style="text-align:center;">© 2026 V12 SmartStep. Group Design & Business Project in collaboration with <a href="https://www.v12footwear.com" target="_blank" rel="noopener">V12 Footwear</a>.</p>
   </div>
 </footer>
- 
+
 <script>
+  // PAGE NAVIGATION
   function showPage(id) {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
@@ -734,9 +767,42 @@
     if (navLink) navLink.classList.add('active');
     document.getElementById('navLinks').classList.remove('open');
   }
+
   function toggleMenu() { document.getElementById('navLinks').classList.toggle('open'); }
   function handleForm(e) { e.preventDefault(); showToast('Message sent! We\'ll be in touch soon.'); e.target.reset(); }
   function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3200); }
+
+  // SLIDESHOW
+  let currentSlide = 0;
+  const totalSlides = 5;
+  let slideshowTimer;
+
+  function updateSlideshow() {
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.slide-dot');
+    slides.forEach((s, i) => s.classList.toggle('active', i === currentSlide));
+    dots.forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+  }
+
+  function moveSlide(dir) {
+    currentSlide = (currentSlide + dir + totalSlides) % totalSlides;
+    updateSlideshow();
+    resetTimer();
+  }
+
+  function goToSlide(n) {
+    currentSlide = n;
+    updateSlideshow();
+    resetTimer();
+  }
+
+  function resetTimer() {
+    clearInterval(slideshowTimer);
+    slideshowTimer = setInterval(() => moveSlide(1), 4000);
+  }
+
+  // Auto-advance every 4 seconds
+  slideshowTimer = setInterval(() => moveSlide(1), 4000);
 </script>
 </body>
 </html>
